@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nexora Forge - Roblox Luau Script and UI Development Workspace">
+  <title>Nexora Forge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>⚡ NEXORA</h2>
+    <p class="muted">FORGE STUDIO</p>
+
+    <button class="nav active" data-page="home">⌂ Dashboard</button>
+    <button class="nav" data-page="script">⌘ Script AI</button>
+    <button class="nav" data-page="ui">▦ UI Designer</button>
+
+    <div class="bottom">
+      Roblox Development<br>
+      Version 0.1
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <p class="muted">WORKSPACE / NEXORA</p>
+        <h1 id="page-title">Your Workspace</h1>
+      </div>
+      <span class="status">● Prototype</span>
+    </header>
+
+    <section class="welcome">
+      <p class="muted">YOUR ROBLOX DEVELOPMENT WORKSPACE</p>
+      <h2>What are we building today?</h2>
+      <p>Create scripts and interfaces for your Roblox game.</p>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <span>⌘</span>
+        <h3>Script AI</h3>
+        <p>Create and improve Luau code.</p>
+        <button data-page="script">Open Script AI →</button>
+      </article>
+
+      <article class="card">
+        <span>▦</span>
+        <h3>UI Designer</h3>
+        <p>Design menus, inventories, and HUDs.</p>
+        <button data-page="ui">Open UI Designer →</button>
+      </article>
+    </section>
+
+    <section class="workspace">
+      <h2 id="tool-title">Script & UI Assistant</h2>
+      <p id="tool-description">
+        Describe what you want to create in Roblox.
+      </p>
+
+      <textarea
+        id="prompt"
+        placeholder="e.g. Create a modern inventory with 20 slots..."
+      ></textarea>
+
+      <button id="generate">Generate Script</button>
+
+      <p id="notice" class="muted">
+        Offline prototype: No AI API connected.
+      </p>
+
+      <h3>Your Result</h3>
+      <pre id="output">Your generated code will appear here.</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #090b10;
+  --sidebar: #0d1017;
+  --panel: #11151e;
+  --panel-hover: #191e2a;
+  --editor: #0b0e15;
+  --border: #242a38;
+  --text: #e5e9f3;
+  --muted: #858fa3;
+  --accent: #a78bfa;
+  --accent-strong: #8b5cf6;
+  --cyan: #67e8f9;
+  --green: #86efac;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+/* LEFT NAVIGATION */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex: 0 0 205px;
+  flex-direction: column;
+  width: 205px;
+  height: 100vh;
+  min-height: 500px;
+  padding: 22px 12px 14px;
+  overflow-y: auto;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+}
+
+.sidebar h2 {
+  margin: 0 0 0 9px;
+  color: #f1edff;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.sidebar > .muted {
+  margin: 0 0 29px 10px;
+  color: #737e95;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+}
+
+.nav {
+  display: block;
+  width: 100%;
+  margin: 2px 0;
+  padding: 10px 11px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #9ca6ba;
+  text-align: left;
+  font-size: 12px;
+}
+
+.nav:hover {
+  background: #171b27;
+  color: white;
+}
+
+.nav.active {
+  border-color: #393052;
+  background: #211b32;
+  box-shadow: inset 2px 0 var(--accent-strong);
+  color: #e9ddff;
+}
+
+.bottom {
+  margin-top: auto;
+  padding: 14px 9px 3px;
+  border-top: 1px solid var(--border);
+  color: #778196;
+  font-size: 11px;
+}
+
+/* MAIN WORKSPACE */
+
+main {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 30px 45px;
+}
+
+header {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 -30px 26px;
+  padding: 13px 30px;
+  border-bottom: 1px solid var(--border);
+  background: #0c0f16;
+}
+
+header .muted {
+  margin: 0 0 2px;
+  color: #828da4;
+  font-size: 9px;
+  letter-spacing: 1.8px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.status {
+  padding: 4px 9px;
+  border: 1px solid #244c3b;
+  border-radius: 5px;
+  background: #11251e;
+  color: var(--green);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* WELCOME / PROJECT BANNER */
+
+.welcome {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 24px 27px;
+  border: 1px solid #292e40;
+  border-radius: 9px;
+  background:
+    radial-gradient(ellipse at 95% 0%, #8b5cf618, transparent 50%),
+    #11151f;
+}
+
+.welcome .muted {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+}
+
+.welcome h2 {
+  position: relative;
+  margin: 0 0 8px;
+  font-size: clamp(23px, 3vw, 31px);
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.welcome > p:last-child {
+  margin: 0;
+  color: #9ba6ba;
+  font-size: 12px;
+}
+
+/* TOOL / PROJECT CARDS */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.card {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.card:hover {
+  border-color: #51416f;
+  background: #141824;
+}
+
+.card > span {
+  display: inline-grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 1px solid #3b3156;
+  border-radius: 6px;
+  background: #211a32;
+  color: var(--accent);
+  font-size: 15px;
+}
+
+.card h3 {
+  margin: 10px 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card p {
+  min-height: 35px;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.card button {
+  padding: 7px 10px;
+  border: 1px solid #303748;
+  border-radius: 5px;
+  background: #1a1f2c;
+  color: #dce2ef;
+  font-size: 11px;
+}
+
+.card button:hover {
+  border-color: var(--accent-strong);
+  background: #282139;
+  color: white;
+}
+
+/* CODE WORKSPACE */
+
+.workspace {
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #2a3040;
+  border-radius: 9px;
+  background: var(--panel);
+}
+
+/* Workspace heading resembles an editor title bar */
+
+.workspace h2 {
+  margin: 0;
+  padding: 15px 19px;
+  border-bottom: 1px solid var(--border);
+  background: #141823;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.workspace > p:not(.muted) {
+  margin: 0;
+  padding: 12px 19px 0;
+  color: #9ba6ba;
+  font-size: 11px;
+}
+
+/* PROMPT INPUT */
+
+#prompt {
+  display: block;
+  width: calc(100% - 36px);
+  min-height: 145px;
+  margin: 16px 18px 12px;
+  padding: 14px;
+  resize: vertical;
+  border: 1px solid #30384a;
+  border-radius: 5px;
+  outline: none;
+  background: var(--editor);
+  color: #dce4f4;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+#prompt::placeholder {
+  color: #68748b;
+}
+
+#prompt:focus {
+  border-color: #8063c9;
+  box-shadow: 0 0 0 2px #8b5cf619;
+}
+
+/* GENERATE BUTTON */
+
+#generate {
+  margin: 0 18px;
+  padding: 9px 14px;
+  border: 1px solid #8b70d3;
+  border-radius: 5px;
+  background: #7353bd;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+#generate:hover {
+  background: #8868d6;
+}
+
+#generate:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+#notice {
+  margin: 12px 18px 20px;
+  color: #8994aa;
+  font-size: 10px;
+}
+
+/* GENERATED CODE AREA */
+
+.workspace h3 {
+  margin: 0;
+  padding: 13px 18px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: #141823;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#output {
+  min-height: 200px;
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  background: var(--editor);
+  color: #c6d5ed;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.85;
+  tab-size: 4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* ACCESSIBILITY */
+
+button:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (min-width: 1500px) {
+  main {
+    padding-right: 42px;
+    padding-left: 42px;
+  }
+
+  header {
+    margin-right: -42px;
+    margin-left: -42px;
+    padding-right: 42px;
+    padding-left: 42px;
+  }
+}
+
+@media (max-width: 850px) {
+  .sidebar {
+    flex-basis: 170px;
+    width: 170px;
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  main {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  header {
+    margin-right: -18px;
+    margin-left: -18px;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    display: block;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    padding: 14px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar h2 {
+    font-size: 18px;
+  }
+
+  .sidebar > .muted {
+    margin-bottom: 10px;
+  }
+
+  .nav {
+    display: inline-block;
+    width: auto;
+    margin: 2px;
+    padding: 8px 10px;
+  }
+
+  .bottom {
+    margin-top: 12px;
+    padding-top: 8px;
+  }
+
+  main {
+    width: 100%;
+    padding: 0 12px 30px;
+  }
+
+  header {
+    min-height: 68px;
+    margin: 0 -12px 18px;
+    padding: 12px;
+  }
+
+  header h1 {
+    font-size: 17px;
+  }
+
+  .welcome {
+    padding: 19px;
+  }
+
+  .welcome h2 {
+    font-size: 25px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  #prompt {
+    width: calc(100% - 24px);
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+
+  #generate {
+    margin-left: 12px;
+  }
+
+  #notice {
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+
+  #output {
+    padding: 14px;
+    font-size: 11px;
+  }
+}
