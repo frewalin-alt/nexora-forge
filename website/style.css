@@ -3162,3 +3162,176 @@ body.login-page {
     padding: 30px 23px;
   }
 }
+
+
+/* NEXORA WORKSPACE: zentrale Eingabe + rechte Projektliste */
+body:not(.login-page) .nexora-main-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 245px;
+  column-gap: 24px;
+  align-items: start;
+  max-width: 1180px !important;
+}
+
+body:not(.login-page) .nexora-hero {
+  grid-column: 1 / -1;
+}
+
+body:not(.login-page) .nexora-composer,
+body:not(.login-page) .nexora-suggestions,
+body:not(.login-page) #notice,
+body:not(.login-page) #output {
+  grid-column: 1;
+  min-width: 0;
+}
+
+.nexora-composer-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+body:not(.login-page) .nexora-composer-actions #create-project-from-prompt {
+  padding: 11px 15px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 12px;
+  background: rgba(255,255,255,.08);
+  color: white;
+  font-weight: 700;
+}
+
+body:not(.login-page) .nexora-composer-actions #create-project-from-prompt:hover {
+  background: rgba(255,255,255,.16);
+}
+
+.nexora-right-projects {
+  grid-column: 2;
+  grid-row: 2 / span 3;
+  align-self: stretch;
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 18px;
+  background: rgba(20,35,45,.32);
+  backdrop-filter: blur(10px);
+}
+
+.nexora-right-projects-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+#right-project-count {
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.13);
+}
+
+.nexora-right-project {
+  display: block;
+  width: 100%;
+  margin: 7px 0;
+  padding: 11px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 10px;
+  background: rgba(255,255,255,.07);
+  color: white;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nexora-right-project:hover {
+  border-color: rgba(230,255,125,.55);
+  background: rgba(255,255,255,.14);
+}
+
+.nexora-right-empty {
+  color: rgba(255,255,255,.72);
+  font-size: 12px;
+}
+
+.nexora-right-new-project {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px dashed rgba(255,255,255,.35);
+  border-radius: 10px;
+  background: transparent;
+  color: white;
+}
+
+.nexora-right-new-project:hover {
+  background: rgba(255,255,255,.1);
+}
+
+.nexora-rotating-example {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 13px 16px;
+  border: 1px solid rgba(230,255,125,.28);
+  border-radius: 13px;
+  background: rgba(230,255,125,.08);
+  color: white;
+  text-align: left;
+}
+
+.nexora-rotating-example span:last-child {
+  flex: 0 0 auto;
+  color: #eaff70;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  body:not(.login-page) .nexora-main-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body:not(.login-page) .nexora-hero,
+  body:not(.login-page) .nexora-composer,
+  body:not(.login-page) .nexora-suggestions,
+  body:not(.login-page) #notice,
+  body:not(.login-page) #output,
+  body:not(.login-page) .nexora-right-projects {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .nexora-composer-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 520px) {
+  body:not(.login-page) .nexora-composer-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nexora-composer-actions {
+    justify-content: stretch;
+  }
+
+  .nexora-composer-actions button {
+    flex: 1;
+  }
+
+  .nexora-rotating-example {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

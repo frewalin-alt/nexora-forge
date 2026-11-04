@@ -503,6 +503,9 @@ function renderProjects() {
   recentList.replaceChildren();
   archivedList.replaceChildren();
 
+  const rightList = document.getElementById("right-project-list");
+  if (rightList) rightList.replaceChildren();
+
   const projects = getProjects();
   const recent = projects.filter(project => !project.archived);
   const archived = projects.filter(project => project.archived);
@@ -511,6 +514,30 @@ function renderProjects() {
   const archivedCount = document.getElementById("archived-project-count");
   if (recentCount) recentCount.textContent = recent.length;
   if (archivedCount) archivedCount.textContent = archived.length;
+
+  const rightCount = document.getElementById("right-project-count");
+  if (rightCount) rightCount.textContent = recent.length;
+
+  if (rightList) {
+    if (!recent.length) {
+      const empty = document.createElement("p");
+      empty.className = "nexora-right-empty";
+      empty.textContent = "Noch keine Projekte. Erstelle deine erste Idee!";
+      rightList.appendChild(empty);
+    } else {
+      recent.forEach(project => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "nexora-right-project";
+        button.textContent = "🎮 " + (project.title || "Untitled Project");
+        button.title = project.title || "Projekt öffnen";
+        button.addEventListener("click", () => {
+          location.href = "project.html?id=" + encodeURIComponent(project.id);
+        });
+        rightList.appendChild(button);
+      });
+    }
+  }
 
   function makeProjectButton(project, isArchived) {
     const item = document.createElement("div");
@@ -821,27 +848,33 @@ document.querySelectorAll(".nexora-suggestion").forEach((button) => {
   });
 });
 
-// Suggestions wechseln dezent, ohne die Bedienung zu stören.
+// Beispielideen wechseln automatisch. Ein Klick übernimmt die Idee in den Prompt.
+const rotatingExample = document.getElementById("nexora-rotating-example");
+const rotatingExampleText = document.getElementById("nexora-rotating-example-text");
 const suggestionTrack = document.getElementById("nexora-suggestion-track");
-if (suggestionTrack) {
-  const suggestions = [...suggestionTrack.children];
-  let suggestionIndex = 0;
 
+if (rotatingExample && rotatingExampleText && suggestionTrack) {
+  const examples = [...suggestionTrack.querySelectorAll(".nexora-suggestion")];
+  let exampleIndex = 0;
+
+  function showNextExample() {
+    if (!examples.length) return;
+    const example = examples[exampleIndex % examples.length];
+    rotatingExample.dataset.prompt = example.dataset.prompt || "";
+    rotatingExampleText.textContent = example.textContent.trim();
+    exampleIndex++;
+  }
+
+  rotatingExample.addEventListener("click", () => {
+    promptInput.value = rotatingExample.dataset.prompt || "";
+    promptInput.focus();
+    promptInput.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+
+  showNextExample();
   setInterval(() => {
-    if (suggestions.length < 2 || document.hidden) return;
-
-    const item = suggestions[suggestionIndex % suggestions.length];
-    item.animate(
-      [
-        { opacity: 1, transform: "translateY(0)" },
-        { opacity: .45, transform: "translateY(-3px)" },
-        { opacity: 1, transform: "translateY(0)" }
-      ],
-      { duration: 650, easing: "ease-in-out" }
-    );
-
-    suggestionIndex++;
-  }, 3500);
+    if (!document.hidden) showNextExample();
+  }, 4000);
 }
 
 // Offline Roblox script templates
@@ -1202,7 +1235,27 @@ function openProjectNameDialog(initialPrompt = "") {
 
 document.querySelector(".new-project-button")?.addEventListener("click", event => {
   event.preventDefault();
-  openProjectNameDialog();
+  openProjectNameDialog(promptInput.value.trim());
+});
+
+document.getElementById("create-project-from-prompt")?.addEventListener("click", () => {
+  const idea = promptInput.value.trim();
+  if (!idea) {
+    notice.textContent = "Beschreibe zuerst deine Roblox-Projektidee.";
+    promptInput.focus();
+    return;
+  }
+  openProjectNameDialog(idea);
+});
+
+document.getElementById("right-new-project")?.addEventListener("click", () => {
+  const idea = promptInput.value.trim();
+  if (!idea) {
+    notice.textContent = "Beschreibe zuerst deine Roblox-Projektidee.";
+    promptInput.focus();
+    return;
+  }
+  openProjectNameDialog(idea);
 });
 
 

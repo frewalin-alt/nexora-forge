@@ -108,15 +108,33 @@
         ></textarea>
         <div class="nexora-composer-footer">
           <span>Roblox Luau · Script Generator</span>
-          <button id="generate" type="button">Build with Nexora ↗</button>
+          <div class="nexora-composer-actions">
+            <button id="create-project-from-prompt" type="button">＋ Projekt erstellen</button>
+            <button id="generate" type="button">Build with Nexora ↗</button>
+          </div>
         </div>
       </div>
+
+      <aside class="nexora-right-projects" id="nexora-right-projects">
+        <div class="nexora-right-projects-heading">
+          <span>DEINE PROJEKTE</span>
+          <span id="right-project-count">0</span>
+        </div>
+        <div id="right-project-list"></div>
+        <button class="nexora-right-new-project" id="right-new-project" type="button">
+          ＋ Neues Projekt
+        </button>
+      </aside>
 
       <div class="nexora-suggestions">
         <div class="nexora-suggestions-heading">
           <span>START WITH AN IDEA</span>
           <span class="nexora-live-dot">● Suggestions</span>
         </div>
+        <button type="button" id="nexora-rotating-example" class="nexora-rotating-example">
+          ✨ <span id="nexora-rotating-example-text">Erstelle ein Inventarsystem für mein Roblox-Spiel.</span>
+          <span>Idee übernehmen →</span>
+        </button>
         <div class="nexora-suggestion-track" id="nexora-suggestion-track">
           <button class="nexora-suggestion" data-prompt="Erstelle ein vollständiges Combat-System mit Angriffen, Cooldowns und serverseitiger Schadensprüfung.">⚔ Combat System</button>
           <button class="nexora-suggestion" data-prompt="Erstelle ein Inventarsystem mit 20 Slots, Item-Verwaltung und einer Roblox-GUI.">🎒 Inventory</button>
