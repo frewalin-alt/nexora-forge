@@ -3335,3 +3335,9 @@ body:not(.login-page) .nexora-composer-actions #create-project-from-prompt:hover
     flex-direction: column;
   }
 }
+
+
+/* NEXORA: hidden elements must stay hidden */
+[hidden] {
+  display: none !important;
+}

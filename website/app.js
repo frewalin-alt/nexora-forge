@@ -1170,7 +1170,7 @@ function openProjectNameDialog(initialPrompt = "") {
 
   actions.append(cancel, submit);
   label.appendChild(input);
-  panel.append(heading, description, label, input, error, actions);
+  panel.append(heading, description, label, error, actions);
   overlay.appendChild(panel);
   document.body.appendChild(overlay);
 
@@ -1210,7 +1210,9 @@ function openProjectNameDialog(initialPrompt = "") {
     currentProjectId = newProject.id;
 
     if (typeof saveProjectToServer === "function") {
-      saveProjectToServer(newProject);
+      saveProjectToServer(newProject).catch(error => {
+        console.warn("Projekt konnte noch nicht synchronisiert werden:", error);
+      });
     }
 
     if (typeof renderProjects === "function") {
