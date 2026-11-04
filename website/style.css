@@ -505,3 +505,2660 @@ button:focus-visible {
     font-size: 11px;
   }
 }
+
+
+
+/* =========================================
+   NEXORA FORGE – NEW AI DASHBOARD
+========================================= */
+
+:root {
+  --bg: #09090d;
+  --sidebar: #0d0d13;
+  --panel: #12121a;
+  --accent: #b69aff;
+  --accent-strong: #9467f5;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 70% 15%, rgba(132, 90, 220, .08), transparent 45%),
+    #09090d;
+}
+
+.sidebar {
+  flex-basis: 245px;
+  width: 245px;
+  padding: 25px 15px;
+  background: rgba(12, 12, 18, .98);
+}
+
+.sidebar h2 {
+  font-size: 21px;
+  letter-spacing: 2px;
+}
+
+.sidebar .nav {
+  padding: 11px 13px;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+.sidebar .nav.active {
+  background: rgba(150, 105, 240, .13);
+  border-color: rgba(170, 135, 255, .18);
+}
+
+main {
+  max-width: 1600px;
+  padding: 0 42px 60px;
+}
+
+header {
+  min-height: 76px;
+  margin: 0 -42px 0;
+  padding: 15px 42px;
+  background: rgba(12, 12, 18, .85);
+  backdrop-filter: blur(18px);
+}
+
+.welcome,
+.cards {
+  display: none !important;
+}
+
+.nexora-main-workspace {
+  max-width: 1000px;
+  margin: 75px auto 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+
+.nexora-hero {
+  text-align: center;
+  margin: 0 auto 30px;
+}
+
+.nexora-eyebrow {
+  margin-bottom: 15px;
+  color: #b79aff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.nexora-hero h2 {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: clamp(30px, 5vw, 49px);
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -2px;
+}
+
+.nexora-hero p {
+  padding: 0 !important;
+  margin: 14px auto 0 !important;
+  color: #9292a5 !important;
+  font-size: 13px !important;
+}
+
+.nexora-composer {
+  padding: 13px;
+  border: 1px solid #393044;
+  border-radius: 17px;
+  background: linear-gradient(145deg, #17151f, #101017);
+  box-shadow: 0 15px 65px rgba(0, 0, 0, .25);
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.nexora-composer:focus-within {
+  border-color: #9069db;
+  box-shadow: 0 0 0 3px rgba(150, 105, 240, .09);
+}
+
+.nexora-composer #prompt {
+  width: 100%;
+  min-height: 115px;
+  margin: 0;
+  padding: 15px;
+  border: 0;
+  resize: vertical;
+  background: transparent;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.nexora-composer #prompt:focus {
+  border: 0;
+  box-shadow: none;
+}
+
+.nexora-composer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 5px 3px;
+  color: #777487;
+  font-size: 10px;
+}
+
+.nexora-composer #generate {
+  margin: 0;
+  padding: 10px 17px;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(110deg, #8054d6, #a17be9);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.nexora-suggestions {
+  margin: 27px 0 40px;
+}
+
+.nexora-suggestions-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 13px;
+  color: #898497;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.nexora-live-dot {
+  color: #9d82d7;
+  letter-spacing: 0;
+}
+
+.nexora-suggestion-track {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+}
+
+.nexora-suggestion {
+  padding: 10px 14px;
+  border: 1px solid #292532;
+  border-radius: 30px;
+  background: #14121b;
+  color: #c8c2d4;
+  font-size: 11px;
+  transition: transform .2s, border-color .2s, background .2s;
+  animation: nexora-suggestion-in .45s both;
+}
+
+.nexora-suggestion:hover {
+  transform: translateY(-3px);
+  border-color: #8b69c9;
+  background: #211a30;
+  color: white;
+}
+
+@keyframes nexora-suggestion-in {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nexora-result-heading {
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #272431;
+}
+
+.nexora-result-heading span {
+  color: #a58acb;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.nexora-result-heading h3 {
+  margin: 4px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 17px;
+}
+
+#output {
+  min-height: 160px;
+  border: 1px solid #282532;
+  border-radius: 12px;
+}
+
+#nexora-projects {
+  width: 100%;
+  margin-top: 28px !important;
+  padding: 12px 0 !important;
+  border: 0 !important;
+  border-top: 1px solid #282532 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+#nexora-projects h3 {
+  padding: 10px 4px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #aaa1bb !important;
+  font-size: 11px !important;
+}
+
+#nexora-project-list article {
+  padding: 10px !important;
+  border-color: #292532 !important;
+  background: #13121a !important;
+}
+
+.plugin-pending-card {
+  margin: 12px;
+  padding: 14px;
+  border: 1px solid #393044;
+  border-radius: 10px;
+  background: #15121d;
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  main {
+    padding: 0 16px 35px;
+  }
+
+  header {
+    margin: 0 -16px;
+    padding: 12px 16px;
+  }
+
+  .nexora-main-workspace {
+    margin-top: 40px;
+  }
+
+  .nexora-hero h2 {
+    font-size: 31px;
+  }
+
+  .nexora-composer-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nexora-composer #generate {
+    width: 100%;
+  }
+}
+
+
+
+/* =====================================
+   NEXORA FORGE — MODERN UI REFRESH
+===================================== */
+
+:root {
+  --accent: #b49aff;
+  --accent-strong: #9064ff;
+  --border: rgba(178, 155, 255, .14);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 75% -15%, rgba(119, 75, 210, .13), transparent 42%),
+    #090812;
+}
+
+button, a.button, .login-button {
+  border-radius: 11px;
+  font-weight: 600;
+}
+
+button:not(.nav):not(.nexora-suggestion) {
+  border: 1px solid rgba(178,155,255,.2);
+  background: linear-gradient(135deg, #30234b, #211a35);
+  color: #f3edff;
+  padding: 10px 16px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.14);
+}
+
+button:not(.nav):not(.nexora-suggestion):hover {
+  border-color: #a78bfa;
+  background: linear-gradient(135deg, #49316f, #30204f);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(126,87,220,.2);
+}
+
+button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.nav {
+  border-radius: 10px;
+  padding: 12px 13px;
+  transition: .2s ease;
+}
+
+.nav.active {
+  background: linear-gradient(100deg, #30234b, #1b1729);
+  border-color: rgba(178,155,255,.22);
+}
+
+.card, .workspace, .welcome {
+  border-radius: 16px;
+  border-color: rgba(178,155,255,.14);
+  box-shadow: 0 12px 40px rgba(0,0,0,.12);
+}
+
+.card {
+  background: linear-gradient(145deg, #151321, #10101a);
+  transition: transform .2s ease, border-color .2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(178,155,255,.4);
+}
+
+textarea {
+  border: 1px solid rgba(178,155,255,.2);
+  border-radius: 13px;
+  background: #0d0b16;
+  color: #f4efff;
+  padding: 16px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #9870f5;
+  box-shadow: 0 0 0 3px rgba(152,112,245,.12);
+}
+
+.nexora-composer {
+  border: 1px solid rgba(178,155,255,.2);
+  border-radius: 17px;
+  background: linear-gradient(145deg, #171323, #100e18);
+  padding: 12px;
+}
+
+.nexora-composer-footer button {
+  background: linear-gradient(110deg, #7950d9, #a178ff) !important;
+  color: white !important;
+  border: 0 !important;
+}
+
+.nexora-suggestion {
+  border: 1px solid rgba(178,155,255,.18);
+  border-radius: 999px;
+  background: #171321;
+  color: #d9caff;
+  padding: 9px 14px;
+}
+
+.nexora-suggestion:hover {
+  background: #29203d;
+  border-color: #9e7bf2;
+  transform: translateY(-2px);
+}
+
+/* SEPARATE LOGIN PAGE */
+
+body.login-page {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  background:
+    radial-gradient(ellipse at 50% 5%, rgba(126,82,220,.22), transparent 50%),
+    radial-gradient(ellipse at 5% 90%, rgba(86,54,160,.12), transparent 38%),
+    #090812;
+}
+
+.login-shell {
+  width: 100%;
+  max-width: 440px;
+  margin: auto;
+}
+
+.login-card {
+  padding: 42px 38px 32px;
+  border: 1px solid rgba(190,166,255,.2);
+  border-radius: 23px;
+  background: linear-gradient(150deg, rgba(27,22,42,.98), rgba(15,13,24,.98));
+  box-shadow: 0 30px 100px rgba(0,0,0,.45), 0 0 60px rgba(127,85,220,.08);
+  text-align: center;
+}
+
+.login-logo {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 17px;
+  place-items: center;
+  border: 1px solid rgba(194,169,255,.35);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #8d61e8, #51318c);
+  color: white;
+  font-size: 29px;
+  box-shadow: 0 10px 35px rgba(128,82,220,.28);
+}
+
+.login-brand {
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.login-brand span {
+  color: #b69aff;
+}
+
+.login-label {
+  margin-top: 9px;
+  color: #817694;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.login-card h1 {
+  margin: 35px 0 9px;
+  color: #f7f2ff;
+  font-size: 29px;
+  letter-spacing: -1px;
+}
+
+.login-description {
+  max-width: 320px;
+  margin: 0 auto 28px;
+  color: #a69db8;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.login-button {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 17px;
+  border: 1px solid #a88aff;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #754bd1, #9a72f5);
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 9px 28px rgba(125,79,218,.25);
+  transition: .2s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 13px 35px rgba(125,79,218,.35);
+}
+
+.roblox-mark {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  transform: rotate(-12deg);
+  border-radius: 6px;
+  background: white;
+  color: #272032;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.login-arrow {
+  margin-left: auto;
+  font-size: 18px;
+}
+
+.login-notice {
+  min-height: 20px;
+  margin: 15px 0 0;
+  color: #f0a5b5;
+  font-size: 12px;
+}
+
+.login-divider {
+  height: 1px;
+  margin: 22px 0 17px;
+  background: rgba(190,166,255,.12);
+}
+
+.login-security {
+  color: #8d849f;
+  font-size: 11px;
+}
+
+.login-security span {
+  color: #75dba7;
+}
+
+.login-footer {
+  margin-top: 22px;
+  color: #6f667f;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.login-footer span {
+  color: #a78bfa;
+}
+
+@media (max-width: 600px) {
+  body.login-page { padding: 16px; }
+  .login-card { padding: 34px 23px 26px; }
+  .login-card h1 { font-size: 25px; }
+}
+
+/* NEXORA FORGE — LEMONADE INSPIRED DASHBOARD */
+:root {
+  --bg: #219ed0;
+  --sidebar: #1c1d20;
+  --panel: #ffffff;
+  --panel-hover: #f4f7fa;
+  --editor: #f8fafc;
+  --border: #dce3e9;
+  --text: #17212b;
+  --muted: #718096;
+  --accent: #b7f36b;
+  --accent-strong: #91d944;
+  --cyan: #67e8f9;
+  --green: #86efac;
+}
+
+/* GLOBAL RESET */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--sidebar);
+  border-right: 1px solid #34363b;
+}
+
+.sidebar h2 {
+  color: #b7f36b;
+}
+
+.nav {
+  color: #b7bdc7;
+}
+
+.nav:hover {
+  background: #303238;
+  color: white;
+}
+
+.nav.active {
+  background: #303b29;
+  border-color: #607c43;
+  box-shadow: inset 3px 0 #b7f36b;
+  color: #d5ffad;
+}
+
+/* MAIN HEADER */
+header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  color: #17212b;
+}
+
+.status {
+  background: #effbe5;
+  border-color: #c8e8a9;
+  color: #467c20;
+}
+
+/* WELCOME BANNER */
+.welcome {
+  background: #b7f36b;
+  border: 1px solid #a4e45a;
+  border-radius: 14px;
+  color: #1c2b16;
+}
+
+.welcome .muted {
+  color: #456c26;
+}
+
+.welcome h2 {
+  color: #1c2b16;
+}
+
+.welcome > p:last-child {
+  color: #425b32;
+}
+
+/* CARDS */
+.card {
+  background: #ffffff;
+  border: 1px solid #dce3e9;
+  border-radius: 12px;
+}
+
+.card:hover {
+  background: #f7fbf2;
+  border-color: #a4d875;
+  transform: translateY(-2px);
+}
+
+.card > span {
+  background: #effbe5;
+  border-color: #d3edb9;
+  color: #578b2c;
+}
+
+.card h3 {
+  color: #17212b;
+}
+
+.card p {
+  color: #718096;
+}
+
+.card button {
+  background: #b7f36b;
+  border: 1px solid #a4e45a;
+  color: #263b18;
+  font-weight: 600;
+}
+
+.card button:hover {
+  background: #a4e45a;
+  border-color: #82c83c;
+  color: #172b0d;
+}
+
+/* BOTTOM SIDEBAR */
+.bottom {
+  border-color: #34363b;
+  color: #9ba3af;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar {
+    flex-basis: 175px;
+    width: 175px;
+  }
+
+  main {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  header {
+    margin-right: -20px;
+    margin-left: -20px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 650px) {
+  body {
+    display: block;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 14px;
+  }
+
+  .sidebar > .muted,
+  .bottom {
+    display: none;
+  }
+
+  .nav {
+    display: inline-block;
+    width: auto;
+  }
+
+  main {
+    width: 100%;
+    padding: 0 15px 30px;
+  }
+
+  header {
+    margin: 0 -15px 20px;
+    padding: 12px 15px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome {
+    padding: 20px;
+  }
+}
+
+/* =========================================
+   NEXORA FORGE — FINAL LIGHT DASHBOARD
+   Login-Seite und Funktionen bleiben erhalten
+========================================= */
+
+body:not(.login-page) {
+  background: #edf4f8 !important;
+  color: #17212b !important;
+}
+
+body:not(.login-page) main {
+  color: #17212b;
+}
+
+body:not(.login-page) header {
+  background: rgba(255,255,255,.92) !important;
+  border-bottom: 1px solid #dce6ed;
+  color: #17212b;
+}
+
+body:not(.login-page) .sidebar {
+  background: #1c1d20 !important;
+}
+
+body:not(.login-page) .nexora-main-workspace {
+  max-width: 1050px;
+  margin: 65px auto 0;
+  color: #17212b;
+}
+
+body:not(.login-page) .nexora-hero h2 {
+  color: #17212b !important;
+}
+
+body:not(.login-page) .nexora-hero p {
+  color: #647789 !important;
+}
+
+body:not(.login-page) .nexora-eyebrow {
+  color: #609b2d !important;
+}
+
+body:not(.login-page) .nexora-composer {
+  background: #ffffff !important;
+  border: 1px solid #dce5eb !important;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(30,60,80,.09);
+}
+
+body:not(.login-page) .nexora-composer #prompt {
+  color: #17212b !important;
+}
+
+body:not(.login-page) .nexora-composer #prompt::placeholder {
+  color: #8999a6 !important;
+}
+
+body:not(.login-page) .nexora-composer-footer {
+  color: #718096 !important;
+}
+
+body:not(.login-page) .nexora-composer #generate,
+body:not(.login-page) .nexora-composer-footer button {
+  background: #b7f36b !important;
+  color: #1c2a17 !important;
+  border: 0 !important;
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+body:not(.login-page) .nexora-composer #generate:hover {
+  background: #a4e653 !important;
+  transform: translateY(-1px);
+}
+
+body:not(.login-page) .nexora-suggestions-heading {
+  color: #647789 !important;
+}
+
+body:not(.login-page) .nexora-live-dot {
+  color: #609b2d !important;
+}
+
+body:not(.login-page) .nexora-suggestion {
+  background: #ffffff !important;
+  border: 1px solid #dce5eb !important;
+  color: #34495a !important;
+}
+
+body:not(.login-page) .nexora-suggestion:hover {
+  background: #f2f9e9 !important;
+  border-color: #a4d66b !important;
+  color: #24351b !important;
+}
+
+body:not(.login-page) .nexora-result-heading {
+  border-color: #dce5eb !important;
+}
+
+body:not(.login-page) .nexora-result-heading span {
+  color: #609b2d !important;
+}
+
+body:not(.login-page) .nexora-result-heading h3 {
+  color: #17212b !important;
+}
+
+body:not(.login-page) #output {
+  background: #ffffff !important;
+  border: 1px solid #dce5eb !important;
+  border-radius: 14px;
+  color: #17212b !important;
+}
+
+body:not(.login-page) #nexora-projects {
+  border-color: #dce5eb !important;
+}
+
+body:not(.login-page) #nexora-projects h3 {
+  color: #34495a !important;
+}
+
+body:not(.login-page) #nexora-project-list article {
+  background: #ffffff !important;
+  border: 1px solid #dce5eb !important;
+  border-radius: 12px;
+  color: #17212b !important;
+}
+
+body:not(.login-page) .plugin-pending-card {
+  background: #ffffff !important;
+  border: 1px solid #dce5eb !important;
+  color: #17212b !important;
+  border-radius: 12px;
+}
+
+body:not(.login-page) button:not(.nexora-composer #generate) {
+  transition: background .2s ease, border-color .2s ease;
+}
+
+@media (max-width: 700px) {
+  body:not(.login-page) .nexora-main-workspace {
+    margin-top: 35px;
+  }
+
+  body:not(.login-page) main {
+    padding: 0 16px 35px;
+  }
+}
+
+
+/* =========================================
+   NEXORA FORGE — BLUE AI STUDIO DESIGN
+========================================= */
+
+body:not(.login-page) {
+  background:
+    radial-gradient(ellipse at 52% 38%, rgba(105,220,255,.65), transparent 43%),
+    linear-gradient(115deg, #168fc9 0%, #219ed0 48%, #147bb9 100%) !important;
+  color: #fff !important;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+body:not(.login-page) .sidebar {
+  width: 270px !important;
+  min-width: 270px !important;
+  min-height: 100vh;
+  background: #1d1e20 !important;
+  border-right: 1px solid rgba(255,255,255,.08);
+  color: #f5f5f5 !important;
+  box-shadow: 8px 0 35px rgba(0,0,0,.12);
+}
+
+body:not(.login-page) .sidebar button,
+body:not(.login-page) .sidebar a {
+  border-radius: 10px;
+}
+
+body:not(.login-page) .sidebar button:hover,
+body:not(.login-page) .sidebar a:hover {
+  background: #303236 !important;
+}
+
+/* Main area */
+body:not(.login-page) main {
+  max-width: none !important;
+  min-height: 100vh;
+  padding: 0 42px 60px !important;
+  background: transparent !important;
+}
+
+/* Header */
+body:not(.login-page) header {
+  min-height: 75px;
+  margin: 0 -42px;
+  padding: 14px 35px;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: white !important;
+}
+
+/* Centered workspace */
+body:not(.login-page) .nexora-main-workspace {
+  width: 100%;
+  max-width: 900px;
+  margin: 125px auto 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Hero title */
+body:not(.login-page) .nexora-hero {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+body:not(.login-page) .nexora-eyebrow {
+  color: #e4ff9b !important;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+body:not(.login-page) .nexora-hero h2 {
+  color: #fff !important;
+  font-size: clamp(38px, 5vw, 68px) !important;
+  font-weight: 950 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -2px !important;
+  text-transform: uppercase;
+  text-shadow: 0 3px 20px rgba(0,50,100,.12);
+}
+
+body:not(.login-page) .nexora-hero h2 span {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 3px 12px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 18px;
+  color: #eaff70 !important;
+  background: rgba(255,255,255,.08);
+}
+
+body:not(.login-page) .nexora-hero p {
+  color: rgba(255,255,255,.82) !important;
+  font-size: 14px !important;
+}
+
+/* Suggestion chips */
+body:not(.login-page) .nexora-suggestions {
+  margin: 25px 0 12px;
+}
+
+body:not(.login-page) .nexora-suggestions-heading {
+  color: rgba(255,255,255,.75) !important;
+}
+
+body:not(.login-page) .nexora-suggestion-track {
+  justify-content: center;
+  gap: 9px;
+}
+
+body:not(.login-page) .nexora-suggestion {
+  padding: 10px 15px;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 30px;
+  background: #29343b !important;
+  color: #fff !important;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0,40,70,.16);
+}
+
+body:not(.login-page) .nexora-suggestion:hover {
+  background: #394750 !important;
+  border-color: rgba(255,255,255,.35) !important;
+  transform: translateY(-2px);
+}
+
+/* Prompt composer */
+body:not(.login-page) .nexora-composer {
+  padding: 17px;
+  border: 1px solid rgba(255,255,255,.17) !important;
+  border-radius: 29px !important;
+  background: #293238 !important;
+  box-shadow: 0 18px 40px rgba(0,43,75,.3) !important;
+}
+
+body:not(.login-page) .nexora-composer:focus-within {
+  border-color: rgba(230,255,125,.65) !important;
+  box-shadow: 0 0 0 3px rgba(230,255,125,.1),
+              0 18px 40px rgba(0,43,75,.3) !important;
+}
+
+body:not(.login-page) .nexora-composer #prompt {
+  min-height: 105px;
+  color: #fff !important;
+  font-size: 15px;
+}
+
+body:not(.login-page) .nexora-composer #prompt::placeholder {
+  color: #a8b0b5 !important;
+}
+
+body:not(.login-page) .nexora-composer-footer {
+  color: #c5cbd0 !important;
+}
+
+/* Lime generate button */
+body:not(.login-page) .nexora-composer #generate,
+body:not(.login-page) .nexora-composer-footer button {
+  padding: 11px 20px;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: #d6f52b !important;
+  color: #202719 !important;
+  font-size: 13px;
+  font-weight: 850;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+}
+
+body:not(.login-page) .nexora-composer #generate:hover {
+  background: #e5ff55 !important;
+  transform: translateY(-2px);
+}
+
+/* Results */
+body:not(.login-page) .nexora-result-heading {
+  margin-top: 35px;
+  border-color: rgba(255,255,255,.2) !important;
+}
+
+body:not(.login-page) .nexora-result-heading span,
+body:not(.login-page) .nexora-result-heading h3 {
+  color: white !important;
+}
+
+body:not(.login-page) #output {
+  background: #293238 !important;
+  border: 1px solid rgba(255,255,255,.17) !important;
+  border-radius: 18px !important;
+  color: white !important;
+}
+
+body:not(.login-page) #nexora-projects {
+  border-color: rgba(255,255,255,.2) !important;
+}
+
+body:not(.login-page) #nexora-projects h3 {
+  color: white !important;
+}
+
+body:not(.login-page) #nexora-project-list article,
+body:not(.login-page) .plugin-pending-card {
+  background: #293238 !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
+  color: white !important;
+  border-radius: 14px;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  body:not(.login-page) .sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: auto;
+  }
+
+  body:not(.login-page) main {
+    padding: 0 16px 35px !important;
+  }
+
+  body:not(.login-page) header {
+    margin: 0 -16px;
+    padding: 12px 16px;
+  }
+
+  body:not(.login-page) .nexora-main-workspace {
+    margin-top: 65px !important;
+  }
+
+  body:not(.login-page) .nexora-hero h2 {
+    font-size: 36px !important;
+  }
+
+  body:not(.login-page) .nexora-composer {
+    border-radius: 20px !important;
+  }
+}
+
+
+
+/* NEXORA DASHBOARD – SIDEBAR UND BLUE WORKSPACE */
+body:not(.login-page) {
+  background: #168bc7;
+}
+
+body:not(.login-page) .sidebar {
+  position: sticky;
+  top: 0;
+  flex: 0 0 270px;
+  width: 270px;
+  height: 100vh;
+  min-height: 100vh;
+  padding: 18px 14px;
+  overflow-y: auto;
+  background: #1c1d20;
+  border-right: 1px solid rgba(255,255,255,.08);
+  color: #f5f5f5;
+}
+
+body:not(.login-page) .nexora-logo {
+  margin: 0 0 3px 4px;
+  color: white;
+  font-size: 23px;
+  letter-spacing: -1px;
+}
+
+body:not(.login-page) .sidebar > .muted {
+  margin: 0 0 22px 7px;
+  color: #85878c;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+body:not(.login-page) .new-project-button {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #f5f6f7;
+  color: #17191c;
+  text-align: left;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+body:not(.login-page) .new-project-button span {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+body:not(.login-page) .project-section {
+  margin: 0 0 22px;
+}
+
+body:not(.login-page) .project-section-heading {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px 9px;
+  color: #92949a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+body:not(.login-page) .sidebar-project-item {
+  margin: 3px 0;
+  border-radius: 8px;
+}
+
+body:not(.login-page) .sidebar-project-item:hover {
+  background: #292b2f;
+}
+
+body:not(.login-page) .sidebar-project-open {
+  width: 100%;
+  padding: 9px 8px;
+  border: 0;
+  background: transparent;
+  color: #f1f1f1;
+  text-align: left;
+  font-size: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body:not(.login-page) .sidebar-project-actions {
+  display: flex;
+  gap: 5px;
+  padding: 0 7px 7px;
+}
+
+body:not(.login-page) .sidebar-project-actions button {
+  padding: 4px 7px;
+  border: 1px solid #45474c;
+  border-radius: 6px;
+  background: #292b2f;
+  color: #c9cbd0;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+body:not(.login-page) .sidebar-project-actions button:hover {
+  background: #3b3e44;
+  color: white;
+}
+
+body:not(.login-page) .sidebar-empty {
+  padding: 4px 8px;
+  color: #73767c;
+  font-size: 11px;
+}
+
+body:not(.login-page) .sidebar-tools {
+  margin-top: 12px;
+  border-top: 1px solid #36383c;
+  padding-top: 12px;
+}
+
+body:not(.login-page) .sidebar-tools .nav {
+  color: #b7b9bf;
+  border-radius: 8px;
+}
+
+body:not(.login-page) .sidebar-tools .nav.active,
+body:not(.login-page) .sidebar-tools .nav:hover {
+  background: #303238;
+  color: white;
+}
+
+body:not(.login-page) .sidebar .bottom {
+  margin-top: auto;
+  padding: 14px 5px 3px;
+  border-top: 1px solid #36383c;
+}
+
+body:not(.login-page) .sidebar-footer-item {
+  padding: 10px 8px;
+  color: #b8bbc1;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+body:not(.login-page) .sidebar-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 14px 5px 5px;
+  border-top: 1px solid #36383c;
+}
+
+body:not(.login-page) .sidebar-profile > span {
+  font-size: 23px;
+}
+
+body:not(.login-page) .sidebar-profile strong,
+body:not(.login-page) .sidebar-profile small {
+  display: block;
+}
+
+body:not(.login-page) .sidebar-profile strong {
+  color: white;
+  font-size: 12px;
+}
+
+body:not(.login-page) .sidebar-profile small {
+  margin-top: 3px;
+  color: #92949a;
+  font-size: 10px;
+}
+
+@media (max-width: 700px) {
+  body:not(.login-page) .sidebar {
+    flex-basis: 220px;
+    width: 220px;
+  }
+}
+
+
+/* Hide dashboard result panel while keeping #output available to app.js */
+#generator-workspace > h3,
+#generator-workspace > #output {
+  display: none !important;
+}
+
+
+/* NEXORA PROJECT WORKBENCH */
+body.project-page {
+  display: flex;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  background: #10131b;
+  color: #edf0f8;
+}
+.project-page .project-sidebar {
+  position: relative !important;
+  top: auto !important;
+  flex: 0 0 245px !important;
+  width: 245px !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  padding: 23px 15px 16px !important;
+  display: flex;
+  flex-direction: column;
+  background: #151821 !important;
+  border-right: 1px solid #292e3b !important;
+  overflow-y: auto;
+}
+.project-brand {
+  color: #f5f6fb;
+  font-size: 22px;
+  font-weight: 850;
+  letter-spacing: -.8px;
+  text-decoration: none;
+}
+.project-brand span { color: #a78bfa; }
+.project-brand-sub {
+  margin: 3px 0 25px 2px;
+  color: #777f91;
+  font-size: 9px;
+  letter-spacing: 2.3px;
+}
+.project-dashboard-link {
+  display: block;
+  padding: 10px 11px;
+  margin-bottom: 28px;
+  border-radius: 8px;
+  color: #b9c0d0;
+  text-decoration: none;
+  font-size: 12px;
+}
+.project-dashboard-link:hover { background: #222735; color: white; }
+.project-tree-heading {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 7px 12px;
+  color: #7e879a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+.project-tree-dots { letter-spacing: 2px; }
+.project-tree-root-title {
+  padding: 10px 8px;
+  color: #e4e7f0;
+  font-size: 12px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.project-tree-folder { margin: 5px 0 0 12px; }
+.project-tree-folder-title {
+  padding: 8px 4px;
+  color: #aeb6c8;
+  font-size: 11px;
+}
+.project-tree-files { margin-left: 13px; border-left: 1px solid #303747; }
+.project-tree-file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: calc(100% - 5px);
+  padding: 8px 7px;
+  margin: 2px 0 2px 5px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #aeb6c8;
+  text-align: left;
+  font-size: 11px;
+  cursor: pointer;
+}
+.project-tree-file span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.project-tree-file:hover { background: #242a38; color: white; }
+.project-tree-file.active {
+  background: #30284a;
+  color: #d8caff;
+}
+.project-file-icon { color: #b69aff; }
+.project-tree-empty {
+  padding: 8px;
+  color: #727b8d;
+  font-size: 11px;
+}
+.project-sidebar-bottom {
+  margin-top: auto;
+  padding: 14px 5px 2px;
+  border-top: 1px solid #2b3040;
+  color: #717a8d;
+  font-size: 10px;
+}
+.project-sidebar-status {
+  margin-bottom: 9px;
+  color: #aeb7c8;
+}
+.project-sidebar-status span, .project-online-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #55c99a;
+}
+.project-page .project-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  height: 100vh;
+  padding: 0 !important;
+  overflow: hidden;
+  background: #10131b;
+}
+.project-topbar {
+  display: flex;
+  flex: 0 0 62px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 22px;
+  border-bottom: 1px solid #292e3b;
+  background: #151821;
+}
+.project-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: #737d91;
+  font-size: 11px;
+}
+.project-breadcrumb strong {
+  overflow: hidden;
+  color: #e7eaf3;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.project-top-actions { display: flex; align-items: center; gap: 15px; }
+.project-script-count { color: #8d96a9; font-size: 11px; }
+.project-dashboard-button {
+  padding: 8px 12px;
+  border: 1px solid #363d4e;
+  border-radius: 8px;
+  color: #d8ddeb;
+  font-size: 11px;
+  text-decoration: none;
+}
+.project-dashboard-button:hover { background: #252b39; }
+.project-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  flex: 1;
+  min-height: 0;
+  gap: 14px;
+  padding: 14px;
+}
+.project-editor-panel, .project-assistant-panel {
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid #2b3140;
+  border-radius: 12px;
+  background: #171b26;
+  overflow: hidden;
+}
+.project-editor-panel {
+  display: flex;
+  flex-direction: column;
+}
+.project-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 43px;
+  padding: 0 13px;
+  border-bottom: 1px solid #2b3140;
+  background: #1b202c;
+}
+.project-tab {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 43px;
+  padding: 0 11px;
+  border-bottom: 2px solid #a78bfa;
+  color: #e4e8f2;
+  font-size: 11px;
+}
+.project-tab > span:first-child { color: #b69aff; }
+.project-tab-close { color: #737d91; }
+.project-language { color: #9b8bd0; font-size: 9px; font-weight: 800; letter-spacing: 1px; }
+.project-editor-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 14px;
+  border-bottom: 1px solid #272d3a;
+  color: #778196;
+  font-size: 10px;
+}
+.project-editor-meta button {
+  padding: 6px 9px;
+  border: 1px solid #3b4355;
+  border-radius: 6px;
+  background: #232938;
+  color: #d6dced;
+  font-size: 10px;
+  cursor: pointer;
+}
+.project-editor-meta button:disabled { opacity: .4; cursor: not-allowed; }
+.project-editor-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px 0;
+  background: #11151e;
+  color: #d9dfed;
+  font: 12px/1.8 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.project-line-numbers {
+  flex: 0 0 48px;
+  padding: 0 13px 0 0;
+  border-right: 1px solid #252c39;
+  color: #596477;
+  text-align: right;
+  white-space: pre;
+  user-select: none;
+}
+.project-code {
+  min-width: max-content;
+  margin: 0;
+  padding: 0 18px;
+  color: #d9dfed;
+  font: inherit;
+  white-space: pre;
+}
+.project-editor-empty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  color: #8a94a8;
+  text-align: center;
+  font-family: inherit;
+}
+.project-editor-empty > div { margin-bottom: 12px; color: #b49aff; font-size: 34px; }
+.project-editor-empty strong { color: #dfe4ef; font-size: 14px; }
+.project-editor-empty p { max-width: 330px; color: #8a94a8; font-size: 11px; line-height: 1.7; }
+.project-assistant-panel {
+  display: flex;
+  flex-direction: column;
+  background: #191e2a;
+}
+.project-assistant-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border-bottom: 1px solid #2b3140;
+}
+.project-assistant-icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 10px;
+  background: #392d5b;
+  color: #d4c3ff;
+  font-size: 17px;
+}
+.project-assistant-header strong, .project-assistant-header small { display: block; }
+.project-assistant-header strong { color: #f0f2f8; font-size: 12px; }
+.project-assistant-header small { margin-top: 3px; color: #8791a5; font-size: 9px; }
+.project-online-dot { margin-left: auto; margin-right: 2px; }
+.project-assistant-intro { padding: 21px 17px 12px; }
+.project-sparkle { color: #b49aff; font-size: 18px; }
+.project-assistant-intro h2 { margin: 8px 0; color: #f0f1f8; font-size: 17px; }
+.project-assistant-intro p { margin: 0; color: #929caf; font-size: 11px; line-height: 1.7; }
+.project-chat {
+  flex: 1;
+  min-height: 50px;
+  padding: 0 14px;
+  overflow: auto;
+}
+.project-chat article {
+  margin: 10px 0 !important;
+  padding: 11px !important;
+  border: 1px solid #343b4c !important;
+  border-radius: 9px !important;
+  background: #222837 !important;
+  color: #dce2ef;
+  font-size: 11px;
+}
+.project-chat pre {
+  margin: 7px 0 0;
+  color: #c2cada;
+  font: inherit;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.project-composer {
+  margin: 12px;
+  padding: 12px;
+  border: 1px solid #41445d;
+  border-radius: 11px;
+  background: #121722;
+  box-shadow: 0 8px 25px rgba(0,0,0,.16);
+}
+.project-composer label {
+  display: block;
+  margin-bottom: 9px;
+  color: #9c8acb;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+.project-composer textarea {
+  display: block;
+  width: 100%;
+  min-height: 125px;
+  resize: vertical;
+  padding: 10px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #edf0f8;
+  font: 12px/1.7 inherit;
+  font-family: inherit;
+}
+.project-composer textarea::placeholder { color: #6f798d; }
+.project-composer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 9px;
+  border-top: 1px solid #2b3140;
+}
+.project-composer-footer > span { color: #778196; font-size: 9px; }
+.project-composer-footer button {
+  padding: 9px 13px;
+  border: 0;
+  border-radius: 8px;
+  background: #9472e8;
+  color: white;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.project-composer-footer button:hover { background: #a487f2; }
+.project-composer-footer button:disabled { opacity: .55; cursor: wait; }
+.project-notice {
+  min-height: 16px;
+  margin: 0 14px 10px;
+  color: #9babc4;
+  font-size: 10px;
+}
+@media (max-width: 1050px) {
+  .project-workbench { grid-template-columns: minmax(0, 1fr) 340px; }
+  .project-page .project-sidebar { flex-basis: 210px !important; width: 210px !important; }
+}
+@media (max-width: 780px) {
+  body.project-page { height: auto; min-height: 100vh; overflow: auto; flex-direction: column; }
+  .project-page .project-sidebar {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .project-sidebar-bottom { display: none; }
+  .project-page .project-main { height: auto; min-height: 80vh; overflow: visible; }
+  .project-workbench { grid-template-columns: 1fr; }
+  .project-editor-panel { min-height: 380px; }
+  .project-assistant-panel { min-height: 550px; }
+  .project-topbar { padding: 0 12px; }
+}
+
+
+/* NEXORA INTERACTIVE SYSTEM MAP */
+.nexora-graph-shell {
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  min-height:100%;
+  padding:14px;
+  font-family:inherit;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(160,170,195,.16) 1px, transparent 1.6px) 0 0 / 18px 18px,
+    #10141d;
+}
+.nexora-graph-toolbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:4px 3px 13px;
+}
+.nexora-graph-toolbar strong,
+.nexora-graph-toolbar span { display:block; }
+.nexora-graph-toolbar strong { color:#f1edff; font-size:17px; }
+.nexora-graph-toolbar span { margin-top:4px; color:#8792a8; font-size:10px; }
+.nexora-graph-controls { display:flex; align-items:center; gap:6px; }
+.nexora-graph-controls button {
+  min-width:30px;
+  padding:7px 9px;
+  border:1px solid #3a4052;
+  border-radius:7px;
+  background:#202636;
+  color:#e7e5f2;
+  cursor:pointer;
+}
+.nexora-graph-controls button:hover { background:#34304b; }
+.nexora-graph-legend {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:13px;
+  padding:0 4px 12px;
+  color:#a5aec0;
+  font-size:10px;
+}
+.nexora-graph-legend span { display:inline-flex; align-items:center; gap:5px; }
+.nexora-graph-legend i {
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#8a91a5;
+}
+.nexora-graph-legend i.active { background:#e5b75b; }
+.nexora-graph-legend i.done { background:#50d69a; }
+.nexora-graph-hint { margin-left:auto; color:#717d92; }
+
+.nexora-graph-viewport {
+  cursor: grab;
+  touch-action: none;
+}
+.nexora-graph-viewport.is-panning {
+  cursor: grabbing;
+  user-select: none;
+}
+.nexora-graph-node {
+  touch-action: none;
+}
+
+.nexora-graph-viewport {
+  position:relative;
+  flex:1;
+  min-height:520px;
+  overflow:auto;
+  border:1px solid #293246;
+  border-radius:10px;
+  background:rgba(8,12,20,.45);
+  scrollbar-color:#424b60 #171d29;
+}
+.nexora-graph-canvas {
+  position:relative;
+  transform-origin:top left;
+  background-image:radial-gradient(rgba(135,151,180,.16) 1px, transparent 1px);
+  background-size:22px 22px;
+}
+.nexora-graph-lines {
+  position:absolute;
+  inset:0;
+  overflow:visible;
+  pointer-events:none;
+}
+.nexora-graph-edge {
+  stroke:#63cbd0;
+  stroke-width:1.7;
+  opacity:.68;
+}
+.nexora-graph-node {
+  position:absolute;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:142px;
+  min-height:72px;
+  padding:7px;
+  border:1px solid #46516a;
+  border-radius:12px;
+  background:linear-gradient(145deg,#252d3e,#171e2b);
+  box-shadow:0 7px 22px rgba(0,0,0,.28);
+  cursor:grab;
+  user-select:none;
+  touch-action:pan-x pan-y;
+}
+.nexora-graph-node:active { cursor:grabbing; }
+.nexora-graph-node.root {
+  z-index:3;
+  width:164px;
+  min-height:86px;
+  border:1px solid #a98aff;
+  background:linear-gradient(145deg,#47356f,#28213f);
+  box-shadow:0 0 25px rgba(158,119,255,.24);
+}
+.nexora-graph-node.selected {
+  outline:2px solid #c2a7ff;
+  outline-offset:3px;
+}
+.nexora-graph-node-open {
+  width:100%;
+  padding:8px 4px 5px;
+  border:0;
+  background:transparent;
+  color:#f0f3fb;
+  font-size:12px;
+  font-weight:750;
+  text-align:center;
+  cursor:pointer;
+}
+.nexora-graph-node.root .nexora-graph-node-open { font-size:14px; }
+.nexora-graph-node-status {
+  padding:4px 8px;
+  border:1px solid #454e62;
+  border-radius:20px;
+  background:#1b2331;
+  color:#aeb8ca;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.5px;
+  cursor:pointer;
+}
+.nexora-graph-node.status-active .nexora-graph-node-status {
+  border-color:#a27c3f;
+  color:#f2c66f;
+}
+.nexora-graph-node.status-done .nexora-graph-node-status {
+  border-color:#397d64;
+  color:#65e0a8;
+}
+.nexora-graph-node-status:disabled { cursor:default; opacity:.8; }
+.nexora-graph-footer {
+  padding:11px 3px 1px;
+  color:#7e8aa0;
+  font-size:10px;
+}
+.project-editor-content:has(.nexora-graph-shell) {
+  display:block;
+  padding:0;
+  overflow:hidden;
+}
+.project-tree-files .project-tree-file {
+  display:block;
+  width:calc(100% - 8px);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+@media (max-width:780px) {
+  .nexora-graph-shell { padding:9px; }
+  .nexora-graph-viewport { min-height:480px; }
+  .nexora-graph-hint { width:100%; margin-left:0; }
+  .nexora-graph-toolbar { align-items:flex-start; }
+}
+
+
+/* Keep the system map inside the editor and scroll in both directions */
+.project-editor-content:has(.nexora-graph-shell) {
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.nexora-graph-shell {
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.nexora-graph-viewport {
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: none;
+}
+
+
+
+/* =========================================================
+   NEXORA FORGE — PREMIUM CINEMATIC REDESIGN
+   Appended overrides. Existing functionality is untouched.
+   ========================================================= */
+
+:root {
+  --bg: #070912;
+  --sidebar: #090d18;
+  --panel: #101626;
+  --panel-hover: #182238;
+  --editor: #090e19;
+  --border: #252e45;
+  --text: #edf1ff;
+  --muted: #929db8;
+  --accent: #a78bfa;
+  --accent-strong: #8b5cf6;
+  --cyan: #67e8f9;
+  --green: #86efac;
+  --nexora-glow: 0 0 35px rgba(139, 92, 246, .13);
+}
+
+html {
+  background: var(--bg);
+  scrollbar-color: #39415e #090d18;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 75% -15%, rgba(111, 76, 210, .15), transparent 42%),
+    radial-gradient(ellipse at 5% 90%, rgba(25, 125, 170, .07), transparent 35%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, sans-serif;
+  letter-spacing: -.12px;
+}
+
+::selection {
+  background: rgba(167, 139, 250, .35);
+  color: white;
+}
+
+button, a, input, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible, a:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  background: linear-gradient(180deg, #0c1120 0%, #090d18 100%);
+  border-right: 1px solid rgba(148, 163, 210, .13);
+  box-shadow: 12px 0 45px rgba(0, 0, 0, .13);
+}
+
+.sidebar h2,
+.nexora-logo {
+  color: #fff;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-shadow: 0 0 24px rgba(167, 139, 250, .3);
+}
+
+.sidebar > .muted,
+.project-brand-sub {
+  color: #7885a5;
+  letter-spacing: 2.7px;
+  font-weight: 700;
+}
+
+.sidebar .nav,
+.nav {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 11px 13px;
+  color: #a3aec8;
+  transition: all .2s ease;
+}
+
+.sidebar .nav:hover,
+.nav:hover {
+  background: rgba(167, 139, 250, .09);
+  border-color: rgba(167, 139, 250, .15);
+  color: #fff;
+  transform: translateX(2px);
+}
+
+.sidebar .nav.active,
+.nav.active {
+  background: linear-gradient(100deg, rgba(139, 92, 246, .23), rgba(103, 232, 249, .055));
+  border-color: rgba(167, 139, 250, .28);
+  box-shadow: inset 3px 0 #a78bfa, 0 5px 22px rgba(91, 55, 180, .12);
+  color: #eee8ff;
+}
+
+.new-project-button {
+  border: 1px solid rgba(190, 169, 255, .35) !important;
+  border-radius: 11px !important;
+  background: linear-gradient(115deg, #7953df, #5940b5) !important;
+  box-shadow: 0 8px 25px rgba(112, 75, 220, .22);
+  color: white !important;
+  font-weight: 700;
+  transition: transform .2s, box-shadow .2s !important;
+}
+
+.new-project-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(112, 75, 220, .35);
+}
+
+.project-section-heading {
+  color: #8491ad;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.sidebar-project-item {
+  border-radius: 9px;
+  transition: background .2s, border-color .2s;
+}
+
+.sidebar-project-item:hover {
+  background: rgba(167, 139, 250, .09);
+}
+
+.sidebar-profile {
+  border: 1px solid rgba(148, 163, 210, .12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .035);
+  padding: 11px;
+}
+
+/* TOP BAR */
+
+main {
+  max-width: 1700px;
+}
+
+header {
+  background: rgba(10, 14, 26, .78);
+  border-bottom: 1px solid rgba(148, 163, 210, .13);
+  backdrop-filter: blur(18px);
+}
+
+header h1 {
+  color: #f4f2ff;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -.8px;
+}
+
+header .muted {
+  color: #8b96b2;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.status {
+  border: 1px solid rgba(134, 239, 172, .25);
+  border-radius: 999px;
+  background: rgba(34, 197, 94, .09);
+  padding: 7px 13px;
+  box-shadow: 0 0 18px rgba(34, 197, 94, .06);
+}
+
+/* WELCOME HERO */
+
+.welcome {
+  isolation: isolate;
+  min-height: 185px;
+  padding: 34px;
+  border: 1px solid rgba(167, 139, 250, .23);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 85% 20%, rgba(139, 92, 246, .28), transparent 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(34, 211, 238, .12), transparent 45%),
+    linear-gradient(125deg, #151a30, #101525 60%, #101b2a);
+  box-shadow: var(--nexora-glow), inset 0 1px rgba(255,255,255,.045);
+}
+
+.welcome::after {
+  content: "N";
+  position: absolute;
+  z-index: -1;
+  right: 7%;
+  top: -55px;
+  color: rgba(190, 174, 255, .045);
+  font-size: 245px;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.welcome .muted {
+  color: #b9a5ff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.4px;
+}
+
+.welcome h2 {
+  color: white;
+  font-size: clamp(27px, 4vw, 39px);
+  font-weight: 750;
+  letter-spacing: -1.7px;
+}
+
+.welcome > p:last-child {
+  color: #b2bdd3;
+  font-size: 13px;
+}
+
+/* FEATURE CARDS */
+
+.cards {
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 23px;
+  border: 1px solid rgba(148, 163, 210, .15);
+  border-radius: 15px;
+  background: linear-gradient(145deg, rgba(21, 29, 48, .96), rgba(13, 19, 33, .96));
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  right: -65px;
+  top: -80px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, .13);
+  filter: blur(35px);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, .43);
+  background: linear-gradient(145deg, #1a2340, #111a2d);
+  box-shadow: 0 16px 40px rgba(0,0,0,.23), 0 0 25px rgba(139,92,246,.09);
+}
+
+.card > span {
+  display: inline-flex;
+  width: 39px;
+  height: 39px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(167, 139, 250, .24);
+  border-radius: 12px;
+  background: rgba(139, 92, 246, .14);
+  color: #c4b5fd;
+  font-size: 19px;
+}
+
+.card h3 {
+  margin-top: 15px;
+  color: #f2f2ff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.card p {
+  color: #9ca9c2;
+}
+
+.card button {
+  border: 1px solid rgba(167, 139, 250, .23);
+  border-radius: 9px;
+  background: rgba(139, 92, 246, .12);
+  color: #d4c7ff;
+  padding: 9px 12px;
+  font-weight: 650;
+}
+
+.card button:hover {
+  background: rgba(139, 92, 246, .25);
+  border-color: rgba(167, 139, 250, .5);
+}
+
+/* AI WORKSPACE */
+
+.nexora-main-workspace,
+.workspace {
+  border: 1px solid rgba(148, 163, 210, .14);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(17, 24, 41, .97), rgba(10, 15, 27, .97));
+  box-shadow: 0 18px 55px rgba(0,0,0,.2);
+}
+
+.nexora-hero {
+  padding-top: 10px;
+}
+
+.nexora-eyebrow {
+  color: #b8a5ff;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.nexora-hero h2 {
+  color: #f5f3ff;
+  font-size: clamp(26px, 4vw, 36px);
+  letter-spacing: -1.5px;
+  font-weight: 750;
+}
+
+.nexora-hero p {
+  color: #a6b2ca;
+}
+
+.nexora-composer {
+  border: 1px solid rgba(167, 139, 250, .22);
+  border-radius: 15px;
+  background: rgba(5, 9, 19, .76);
+  box-shadow: 0 12px 35px rgba(0,0,0,.2);
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.nexora-composer:focus-within {
+  border-color: rgba(167, 139, 250, .68);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, .1), 0 15px 40px rgba(0,0,0,.24);
+}
+
+.nexora-composer #prompt {
+  color: #edf0ff;
+  line-height: 1.8;
+}
+
+.nexora-composer #prompt::placeholder {
+  color: #65718c;
+}
+
+.nexora-composer-footer {
+  border-top: 1px solid rgba(148, 163, 210, .12);
+}
+
+.nexora-composer #generate,
+.nexora-composer-footer button {
+  border: 1px solid rgba(198, 180, 255, .35);
+  border-radius: 10px;
+  background: linear-gradient(115deg, #8b5cf6, #6750d5);
+  color: white;
+  font-weight: 750;
+  box-shadow: 0 5px 20px rgba(112, 75, 220, .2);
+  transition: transform .2s, box-shadow .2s, filter .2s;
+}
+
+.nexora-composer #generate:hover,
+.nexora-composer-footer button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 9px 27px rgba(112, 75, 220, .35);
+}
+
+.nexora-suggestion {
+  border: 1px solid rgba(148, 163, 210, .16);
+  border-radius: 999px;
+  background: rgba(255,255,255,.035);
+  color: #b9c5dd;
+  transition: all .2s ease;
+}
+
+.nexora-suggestion:hover {
+  border-color: rgba(103, 232, 249, .4);
+  background: rgba(103, 232, 249, .08);
+  color: #e3fbff;
+  transform: translateY(-2px);
+}
+
+.nexora-live-dot {
+  color: #77e8b0;
+}
+
+.nexora-result-heading h3 {
+  color: #f1edff;
+}
+
+/* PROJECT WORKSPACE */
+
+.project-page {
+  background:
+    radial-gradient(ellipse at 70% -15%, rgba(111, 76, 210, .12), transparent 42%),
+    #080c16;
+}
+
+.project-page .project-sidebar {
+  background: linear-gradient(180deg, #0c1120, #090d18);
+  border-right: 1px solid rgba(148, 163, 210, .13);
+}
+
+.project-brand {
+  color: #fff;
+  font-weight: 850;
+  letter-spacing: 1.4px;
+}
+
+.project-brand span {
+  color: #b49aff;
+  text-shadow: 0 0 18px rgba(167, 139, 250, .55);
+}
+
+.project-dashboard-link,
+.project-dashboard-button {
+  border: 1px solid rgba(148, 163, 210, .14);
+  border-radius: 9px;
+  background: rgba(255,255,255,.035);
+  color: #bac5dc;
+  transition: all .2s ease;
+}
+
+.project-dashboard-link:hover,
+.project-dashboard-button:hover {
+  border-color: rgba(167, 139, 250, .4);
+  background: rgba(139, 92, 246, .12);
+  color: white;
+}
+
+.project-page .project-topbar {
+  background: rgba(10, 14, 26, .82);
+  border-bottom: 1px solid rgba(148, 163, 210, .13);
+  backdrop-filter: blur(18px);
+}
+
+.project-breadcrumb strong {
+  color: #f0edff;
+}
+
+.project-editor-panel,
+.project-assistant-panel {
+  border: 1px solid rgba(148, 163, 210, .15);
+  border-radius: 14px;
+  background: linear-gradient(150deg, #11192a, #0d1422);
+  box-shadow: 0 15px 45px rgba(0,0,0,.17);
+  overflow: hidden;
+}
+
+.project-panel-top,
+.project-assistant-header {
+  background: rgba(255,255,255,.025);
+  border-bottom: 1px solid rgba(148, 163, 210, .12);
+}
+
+.project-tab {
+  color: #e7e4ff;
+}
+
+.project-language {
+  color: #9e8aff;
+  letter-spacing: 1.5px;
+  font-weight: 750;
+}
+
+.project-assistant-icon {
+  border: 1px solid rgba(167, 139, 250, .3);
+  background: linear-gradient(145deg, rgba(139, 92, 246, .25), rgba(103, 232, 249, .09));
+  box-shadow: 0 0 20px rgba(139, 92, 246, .12);
+}
+
+.project-assistant-header strong {
+  color: #f0edff;
+}
+
+.project-assistant-intro h2 {
+  color: #f2efff;
+  letter-spacing: -.7px;
+}
+
+.project-assistant-intro p {
+  color: #a4b0c8;
+}
+
+.project-composer {
+  border: 1px solid rgba(167, 139, 250, .2);
+  border-radius: 12px;
+  background: #090f1c;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.project-composer:focus-within {
+  border-color: rgba(167, 139, 250, .65);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, .09);
+}
+
+.project-composer textarea {
+  color: #edf0ff;
+  background: transparent;
+}
+
+.project-composer textarea::placeholder {
+  color: #64718b;
+}
+
+.project-composer-footer {
+  border-top: 1px solid rgba(148, 163, 210, .12);
+}
+
+.project-composer-footer button {
+  border: 1px solid rgba(198, 180, 255, .3);
+  border-radius: 9px;
+  background: linear-gradient(115deg, #8b5cf6, #6750d5);
+  color: white;
+  font-weight: 750;
+  box-shadow: 0 5px 18px rgba(112, 75, 220, .2);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.project-composer-footer button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(112, 75, 220, .34);
+}
+
+/* LOGIN */
+
+body.login-page {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 15%, rgba(139, 92, 246, .22), transparent 40%),
+    radial-gradient(ellipse at 80% 90%, rgba(34, 211, 238, .09), transparent 35%),
+    #080b15;
+}
+
+.login-shell {
+  width: min(100% - 32px, 470px);
+}
+
+.login-card {
+  border: 1px solid rgba(167, 139, 250, .24);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(20, 27, 47, .97), rgba(10, 15, 28, .98));
+  box-shadow: 0 30px 100px rgba(0,0,0,.42), 0 0 55px rgba(139,92,246,.12);
+  padding: 43px;
+  backdrop-filter: blur(20px);
+}
+
+.login-logo {
+  border: 1px solid rgba(190, 169, 255, .35);
+  border-radius: 17px;
+  background: linear-gradient(145deg, #8b5cf6, #4d3ba5);
+  box-shadow: 0 8px 28px rgba(112, 75, 220, .35);
+  color: white;
+}
+
+.login-brand {
+  color: white;
+  font-weight: 850;
+  letter-spacing: 2px;
+}
+
+.login-brand span {
+  color: #b7a2ff;
+}
+
+.login-label {
+  color: #9d8be5;
+  letter-spacing: 2px;
+  font-weight: 750;
+}
+
+.login-card h1 {
+  color: #f7f5ff;
+  letter-spacing: -1.5px;
+}
+
+.login-description {
+  color: #aab5cc;
+  line-height: 1.8;
+}
+
+.login-button {
+  border: 1px solid rgba(198, 180, 255, .35);
+  border-radius: 12px;
+  background: linear-gradient(110deg, #8058e7, #6049c2);
+  box-shadow: 0 9px 27px rgba(112, 75, 220, .25);
+  color: white;
+  font-weight: 750;
+  transition: transform .2s, box-shadow .2s, filter .2s;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 13px 34px rgba(112, 75, 220, .38);
+}
+
+.login-security {
+  color: #9ba8c1;
+}
+
+.login-security span {
+  color: #75e5ae;
+}
+
+.login-footer {
+  color: #697590;
+  letter-spacing: 2px;
+}
+
+/* SHARED SCROLLBARS AND ANIMATIONS */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #39415e transparent;
+}
+
+@keyframes nexoraFadeUp {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome,
+.card,
+.nexora-main-workspace,
+.project-editor-panel,
+.project-assistant-panel,
+.login-card {
+  animation: nexoraFadeUp .45s ease both;
+}
+
+.card:nth-child(2) {
+  animation-delay: .06s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  header {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .welcome {
+    padding: 27px;
+  }
+}
+
+@media (max-width: 650px) {
+  body:not(.login-page) {
+    min-width: 320px;
+  }
+
+  body:not(.login-page) main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  body:not(.login-page) header {
+    margin-left: -14px;
+    margin-right: -14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .welcome {
+    min-height: 155px;
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .welcome::after {
+    right: -12px;
+    top: -15px;
+    font-size: 145px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 19px;
+  }
+
+  .login-card {
+    padding: 30px 23px;
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexora Forge – Projekt</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="project-page">
+<aside class="sidebar project-sidebar">
+  <a class="project-brand" href="index.html"><span>⚡</span> NEXORA</a>
+  <p class="project-brand-sub">FORGE STUDIO</p>
+  <a class="project-dashboard-link" href="index.html">← Dashboard</a>
+
+  <div class="project-tree-heading">
+    <span>SYSTEM-MAP</span>
+    <span class="project-tree-dots">•••</span>
+  </div>
+  <div class="project-tree-root">
+    <div class="project-tree-root-title">📁 <span id="project-tree-name">Projekt</span></div>
+    <div class="project-tree-folder">
+      <div class="project-tree-folder-title">▾ ◈ System-Graph</div>
+      <div id="project-tree-scripts" class="project-tree-files"></div>
+    </div>
+  </div>
+
+  <div class="project-sidebar-bottom">
+    <div class="project-sidebar-status"><span></span> Project saved</div>
+    <div>Roblox Development · Version 0.3</div>
+  </div>
+</aside>
+
+<main class="project-main">
+  <header class="project-topbar">
+    <div class="project-breadcrumb">
+      <span>NEXORA</span><span>/</span><strong id="project-title">Loading project …</strong>
+    </div>
+    <div class="project-top-actions">
+      <span id="project-info" class="project-script-count">Project Overview</span>
+      <a class="project-dashboard-button" href="index.html">Dashboard</a>
+    </div>
+  </header>
+
+  <div class="project-workbench">
+    <section class="project-editor-panel">
+      <div class="project-panel-top">
+        <div class="project-tab"><span>▤</span><span id="editor-file-title">Project Overview</span><span class="project-tab-close">×</span></div>
+        <span class="project-language">LIVE SYSTEM MAP</span>
+      </div>
+      <div class="project-editor-meta">
+        <span id="editor-file-path">Interactive map of your game systems</span>
+        <button id="editor-copy" type="button" disabled>Projektplan</button>
+      </div>
+      <div id="project-scripts" class="project-editor-content">
+        <div class="project-editor-empty">Loading your project plan.</div>
+      </div>
+    </section>
+
+    <aside class="project-assistant-panel">
+      <div class="project-assistant-header">
+        <div class="project-assistant-icon">✦</div>
+        <div><strong>Nexora AI</strong><small>Your Roblox development assistant</small></div>
+        <span class="project-online-dot"></span>
+      </div>
+      <div class="project-assistant-intro">
+        <span class="project-sparkle">✦</span>
+        <h2>What should we build next?</h2>
+        <p>Describe a feature, system, or change. Nexora will create Luau scripts for your project.</p>
+      </div>
+      <div id="project-chat" class="project-chat"></div>
+      <div class="project-composer">
+        <label for="project-prompt">YOUR INSTRUCTION</label>
+        <textarea id="project-prompt" rows="6" placeholder="Zum Beispiel: Erstelle ein Münzsystem mit Speicherung, das Spieler-Münzen bei Berührung erhöht …"></textarea>
+        <div class="project-composer-footer">
+          <span>Ctrl + Enter to send</span>
+          <button id="project-generate" type="button">Generate <span>↗</span></button>
+        </div>
+      </div>
+      <p id="project-notice" class="project-notice" role="status"></p>
+    </aside>
+  </div>
+</main>
+<script src="project.js"></script>
+</body>
+</html>

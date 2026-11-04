@@ -1,25 +1,53 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090812">
   <meta name="description" content="Nexora Forge - Roblox Luau Script and UI Development Workspace">
   <title>Nexora Forge</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <aside class="sidebar">
-    <h2>⚡ NEXORA</h2>
+    <h2 class="nexora-logo">⚡ NEXORA</h2>
     <p class="muted">FORGE STUDIO</p>
 
-    <button class="nav active" data-page="home">⌂ Dashboard</button>
-    <button class="nav" data-page="script">⌘ Script AI</button>
-    <button class="nav" data-page="ui">▦ UI Designer</button>
+    <button class="new-project-button" data-page="home" type="button">
+      <span>＋</span> New Project
+    </button>
+
+    <div class="project-section">
+      <div class="project-section-heading">
+        <span>Recent Projects</span>
+        <span id="recent-project-count">0</span>
+      </div>
+      <div id="recent-project-list" class="sidebar-project-list"></div>
+    </div>
+
+    <div class="project-section">
+      <div class="project-section-heading">
+        <span>Archived</span>
+        <span id="archived-project-count">0</span>
+      </div>
+      <div id="archived-project-list" class="sidebar-project-list"></div>
+    </div>
+
+    <div class="sidebar-tools">
+      <button class="nav" data-page="script" type="button">⌘ Script AI</button>
+      <button class="nav" data-page="ui" type="button">▦ UI Designer</button>
+    </div>
 
     <div class="bottom">
-      Roblox Development<br>
-      Version 0.1
+      <div class="sidebar-footer-item">⚒ Download Plugin</div>
+      <div class="sidebar-footer-item">▤ Billing</div>
+      <div class="sidebar-profile">
+        <span>⚡</span>
+        <div>
+          <strong>Nexora Account</strong>
+          <small>Roblox Development</small>
+        </div>
+      </div>
     </div>
   </aside>
 
@@ -29,8 +57,14 @@
         <p class="muted">WORKSPACE / NEXORA</p>
         <h1 id="page-title">Your Workspace</h1>
       </div>
-      <span class="status">● Prototype</span>
+
+      <div class="account-area">
+        <span id="account-status" class="status">● Not signed in</span>
+        <button id="logout-button" type="button" hidden>Logout</button>
+      </div>
     </header>
+
+
 
     <section class="welcome">
       <p class="muted">YOUR ROBLOX DEVELOPMENT WORKSPACE</p>
@@ -54,25 +88,52 @@
       </article>
     </section>
 
-    <section class="workspace">
-      <h2 id="tool-title">Script & UI Assistant</h2>
-      <p id="tool-description">
-        Describe what you want to create in Roblox.
-      </p>
+    <section id="plugin-auth-panel" hidden style="margin:24px 0;padding:20px;border:1px solid #59418a;border-radius:14px;background:#191526">
+      <h2 style="margin-top:0">Roblox Studio verbinden</h2>
+      <p id="plugin-auth-empty">Es gibt momentan keine offenen Verbindungsanfragen.</p>
+      <div id="plugin-auth-requests"></div>
+    </section>
 
-      <textarea
-        id="prompt"
-        placeholder="e.g. Create a modern inventory with 20 slots..."
-      ></textarea>
+    <section id="generator-workspace" class="workspace nexora-main-workspace" hidden>
+      <div class="nexora-hero">
+        <div class="nexora-eyebrow">NEXORA AI WORKSPACE</div>
+        <h2 id="tool-title">Describe a game mechanic</h2>
+        <p id="tool-description">Describe your idea. Nexora turns it into Roblox Luau systems.</p>
+      </div>
 
-      <button id="generate">Generate Script</button>
+      <div class="nexora-composer">
+        <textarea
+          id="prompt"
+          placeholder="Describe what you want to build in your Roblox game..."
+        ></textarea>
+        <div class="nexora-composer-footer">
+          <span>Roblox Luau · Script Generator</span>
+          <button id="generate" type="button">Build with Nexora ↗</button>
+        </div>
+      </div>
+
+      <div class="nexora-suggestions">
+        <div class="nexora-suggestions-heading">
+          <span>START WITH AN IDEA</span>
+          <span class="nexora-live-dot">● Suggestions</span>
+        </div>
+        <div class="nexora-suggestion-track" id="nexora-suggestion-track">
+          <button class="nexora-suggestion" data-prompt="Erstelle ein vollständiges Combat-System mit Angriffen, Cooldowns und serverseitiger Schadensprüfung.">⚔ Combat System</button>
+          <button class="nexora-suggestion" data-prompt="Erstelle ein Inventarsystem mit 20 Slots, Item-Verwaltung und einer Roblox-GUI.">🎒 Inventory</button>
+          <button class="nexora-suggestion" data-prompt="Erstelle ein Pet-System mit Begleitern, Seltenheiten und Ausrüstung.">🐾 Pet System</button>
+          <button class="nexora-suggestion" data-prompt="Erstelle ein Coin-System mit Leaderstats und sicherer serverseitiger Vergabe.">🪙 Coin System</button>
+          <button class="nexora-suggestion" data-prompt="Erstelle ein Shop-System mit Kaufprüfung auf dem Server und einer GUI.">🛒 Shop System</button>
+          <button class="nexora-suggestion" data-prompt="Erstelle ein Quest-System mit Aufgaben, Fortschritt und Belohnungen.">📜 Quest System</button>
+          <button class="nexora-suggestion" data-prompt="Erstelle ein Tycoon-System mit kaufbaren Maschinen und Einkommen.">🏭 Tycoon</button>
+          <button class="nexora-suggestion" data-prompt="Erstelle ein Level- und XP-System mit Fortschrittsanzeige.">🏆 Level System</button>
+        </div>
+      </div>
 
       <p id="notice" class="muted">
         Nexora AI bereit – beschreibe dein Roblox-Projekt.
       </p>
 
-      <h3>Your Result</h3>
-      <pre id="output">Your generated code will appear here.</pre>
+      <pre id="output" hidden aria-hidden="true">Your generated code will appear here.</pre>
     </section>
   </main>
 
