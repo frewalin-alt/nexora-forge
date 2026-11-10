@@ -1,0 +1,27 @@
+node_modules/
+server/node_modules/
+
+server/nexora.sqlite
+server/nexora.sqlite-shm
+server/nexora.sqlite-wal
+
+.env
+.env.*
+!.env.example
+
+*.backup
+*.log
+npm-debug.log*
+
+.DS_Store
+Thumbs.db
+
+# Nexora Forge private backups and databases
+backups/
+.nexora-*-backup*/
+*.backup*
+*.before-*
+*.fly-backup-*
+*.sqlite
+*.sqlite-*
+.nexora-backup*/

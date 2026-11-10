@@ -183,6 +183,18 @@ local refreshProjectsButton = create("TextButton", {
     Visible = false,
 }, main)
 
+local autoInstallButton = create("TextButton", {
+    Name = "AutoInstallButton",
+    Size = UDim2.new(1, -192, 0, 32),
+    Position = UDim2.fromOffset(176, 526),
+    Text = "Auto-Install: AUS",
+    BackgroundColor3 = COLORS.Panel,
+    TextColor3 = COLORS.Text,
+    Font = Enum.Font.GothamBold,
+    TextSize = 12,
+    Visible = false,
+}, main)
+
 local installButton = create("TextButton", {
     Name = "InstallProjectButton",
     Size = UDim2.new(1, -32, 0, 34),
@@ -269,8 +281,13 @@ local function normalizeProject(project)
         return nil, "Project scripts are missing or exceed the limit."
     end
 
+    local projectId = tostring(project.id or "")
+    if projectId == "" then
+        return nil, "Project ID is missing."
+    end
+
     local normalized = {
-        id = tostring(project.id or ""),
+        id = projectId,
         name = projectName,
         updatedAt = tostring(project.updatedAt or ""),
         scripts = {},
@@ -334,6 +351,8 @@ local function findPath(root, path)
 end
 
 local selectedProject = nil
+local autoInstallEnabled = false
+local autoInstallProjectId = nil
 
 local function applyProject(project)
     local normalized, reason = normalizeProject(project)
@@ -370,7 +389,7 @@ end
 local function installProject()
     if not selectedProject then
         setStatus("Load a project first.", COLORS.Red)
-        return
+        return false
     end
 
     local serverScripts = game:GetService("ServerScriptService")
@@ -505,15 +524,37 @@ local function installProject()
     if not ok then
         setStatus("Installation failed", COLORS.Red)
         footer.Text = tostring(err)
-        return
+        return false
     end
 
     setStatus("Project installed", COLORS.Green)
     footer.Text = tostring(installed) .. " script(s) installed; "
         .. tostring(skipped) .. " existing script(s) skipped."
+    return true
 end
 
 installButton.MouseButton1Click:Connect(installProject)
+
+autoInstallButton.MouseButton1Click:Connect(function()
+    if not selectedProject or selectedProject.id == "" then
+        setStatus("Please select a project first.", COLORS.Red)
+        return
+    end
+
+    if autoInstallEnabled and autoInstallProjectId == selectedProject.id then
+        autoInstallEnabled = false
+        autoInstallProjectId = nil
+        autoInstallButton.Text = "Auto-Install: AUS"
+        autoInstallButton.BackgroundColor3 = COLORS.Panel
+        footer.Text = "Automatic installation disabled."
+    else
+        autoInstallEnabled = true
+        autoInstallProjectId = selectedProject.id
+        autoInstallButton.Text = "Auto-Install: AN"
+        autoInstallButton.BackgroundColor3 = COLORS.Green
+        footer.Text = "Auto-install enabled for: " .. selectedProject.name
+    end
+end)
 
 
 -- NEXORA_BROWSER_AUTH_V1
@@ -526,6 +567,8 @@ local requestJson
 -- Automatic project synchronization.
 local autoSyncRunning = false
 local knownProjects = {}
+local autoInstallAttempts = {}
+local MAX_AUTO_INSTALL_ATTEMPTS = 3
 
 local function startAutoSync(token)
     if autoSyncRunning then
@@ -569,12 +612,53 @@ local function startAutoSync(token)
                             local updatedAt = tostring(project.updatedAt or "")
 
                             if knownProjects[id] ~= updatedAt then
-                                -- Install only projects that change after the initial sync.
-                                knownProjects[id] = updatedAt
-
                                 if type(project.scripts) == "table"
                                     and #project.scripts > 0 then
-                                    footer.Text = "Website project updated. Refresh projects to review it."
+
+                                    if autoInstallEnabled
+                                        and autoInstallProjectId == id
+                                        and selectedProject
+                                        and selectedProject.id == id then
+
+                                        autoInstallAttempts[id] = autoInstallAttempts[id] or 0
+
+                                        if applyProject(project) then
+                                            local installedOk = installProject()
+
+                                            if installedOk then
+                                                knownProjects[id] = updatedAt
+                                                autoInstallAttempts[id] = 0
+                                                footer.Text = "Automatically installed updated project: "
+                                                    .. selectedProject.name
+                                            else
+                                                autoInstallAttempts[id] += 1
+                                                footer.Text = "Auto-install attempt "
+                                                    .. autoInstallAttempts[id] .. "/"
+                                                    .. MAX_AUTO_INSTALL_ATTEMPTS .. " failed."
+
+                                                if autoInstallAttempts[id] >= MAX_AUTO_INSTALL_ATTEMPTS then
+                                                    knownProjects[id] = updatedAt
+                                                    autoInstallEnabled = false
+                                                    autoInstallProjectId = nil
+                                                    autoInstallButton.Text = "Auto-Install: AUS"
+                                                    autoInstallButton.BackgroundColor3 = COLORS.Panel
+                                                    footer.Text = "Auto-install stopped after 3 failed attempts. Review the project and install manually."
+                                                end
+                                            end
+                                        else
+                                            knownProjects[id] = updatedAt
+                                            autoInstallEnabled = false
+                                            autoInstallProjectId = nil
+                                            autoInstallButton.Text = "Auto-Install: AUS"
+                                            autoInstallButton.BackgroundColor3 = COLORS.Panel
+                                            footer.Text = "Project validation failed. Auto-install stopped."
+                                        end
+                                    else
+                                        knownProjects[id] = updatedAt
+                                        footer.Text = "Website project updated. Refresh projects to review it."
+                                    end
+                                else
+                                    knownProjects[id] = updatedAt
                                 end
                             end
                         end
@@ -635,6 +719,11 @@ local function loadProjects()
         end
 
         selectedProject = nil
+        autoInstallEnabled = false
+        autoInstallProjectId = nil
+        autoInstallButton.Visible = false
+        autoInstallButton.Text = "Auto-Install: AUS"
+        autoInstallButton.BackgroundColor3 = COLORS.Panel
         installButton.Visible = false
         projectList.Visible = false
         preview.Visible = true
@@ -674,9 +763,14 @@ local function loadProjects()
 
             projectButton.MouseButton1Click:Connect(function()
                 if applyProject(projectData) then
+                    autoInstallEnabled = false
+                    autoInstallProjectId = selectedProject.id
+                    autoInstallButton.Visible = true
+                    autoInstallButton.Text = "Auto-Install: AUS"
+                    autoInstallButton.BackgroundColor3 = COLORS.Panel
                     projectList.Visible = false
                     preview.Visible = true
-                    footer.Text = "Project selected. Click Install Project to install it."
+                    footer.Text = "Project selected. Auto-install is off."
                 end
             end)
         end
@@ -903,31 +997,108 @@ local function startJobPolling(token)
 end
 
 local connecting = false
+local heartbeatRunning = false
 
-local function testSavedConnection()
+local function startHeartbeat(token)
+    if heartbeatRunning then
+        return
+    end
+
+    heartbeatRunning = true
+
+    task.spawn(function()
+        while heartbeatRunning do
+            local callOk, success, status, data = pcall(function()
+                return requestJson(
+                    SERVER_URL .. "/api/plugin/heartbeat",
+                    "POST",
+                    {},
+                    token
+                )
+            end)
+
+            if callOk and status == 401 then
+                heartbeatRunning = false
+                plugin:SetSetting(TOKEN_SETTING, "")
+                setStatus("Authorization expired", COLORS.Red)
+                connectButton.Text = "Connect"
+                connectButton.Active = true
+                footer.Text = "Please reconnect Nexora Forge."
+                return
+            end
+
+            if callOk and success and type(data) == "table" then
+                if data.connected == true then
+                    setStatus("Connected", COLORS.Green)
+                    connectButton.Text = "Connected"
+                    connectButton.Active = false
+                    footer.Text = "Roblox Studio is connected."
+                else
+                    setStatus("Connection inactive", COLORS.Muted)
+                    connectButton.Text = "Reconnect"
+                    connectButton.Active = true
+
+                    if data.reason == "prompt_inactive" then
+                        footer.Text = "Inactive after 30 minutes. Click Reconnect to continue."
+                    else
+                        footer.Text = "Connection unavailable. Click Reconnect."
+                    end
+                end
+            end
+
+            task.wait(15)
+        end
+    end)
+end
+
+local function testSavedConnection(activate)
     local token = plugin:GetSetting(TOKEN_SETTING)
 
     if type(token) ~= "string" or token == "" then
         setStatus("Not connected", COLORS.Muted)
+        connectButton.Text = "Connect"
+        connectButton.Active = true
         return false
     end
 
-    local callOk, success, status, data = pcall(function()
+    local callOk, success, status = pcall(function()
         return requestJson(SERVER_URL .. "/api/plugin/ping", "GET", nil, token)
     end)
 
-    if callOk and success and status == 200
-        and type(data) == "table" and data.connected == true then
-        setStatus("Connected", COLORS.Green)
-        connectButton.Text = "Connected"
-        connectButton.Active = false
-        refreshProjectsButton.Visible = false
-        footer.Text = "Roblox Studio is connected."
-        startAutoSync(token)
-        startJobPolling(token)
-        projectTitle.Visible = true
-        refreshProjectsButton.Visible = true
-        return true
+    if callOk and success and status == 200 then
+        local heartbeatOk, heartbeatSuccess, heartbeatStatus, data = pcall(function()
+            return requestJson(
+                SERVER_URL .. "/api/plugin/heartbeat",
+                "POST",
+                { activate = activate == true },
+                token
+            )
+        end)
+
+        if heartbeatOk and heartbeatSuccess and heartbeatStatus == 200
+            and type(data) == "table" and data.connected == true then
+            setStatus("Connected", COLORS.Green)
+            connectButton.Text = "Connected"
+            connectButton.Active = false
+            footer.Text = "Roblox Studio is connected."
+            startHeartbeat(token)
+            startAutoSync(token)
+            startJobPolling(token)
+            projectTitle.Visible = true
+            refreshProjectsButton.Visible = true
+            return true
+        end
+
+        if heartbeatOk and heartbeatStatus == 401 then
+            plugin:SetSetting(TOKEN_SETTING, "")
+            setStatus("Authorization expired", COLORS.Red)
+            return false
+        end
+
+        setStatus("Connection inactive", COLORS.Muted)
+        connectButton.Text = "Reconnect"
+        connectButton.Active = true
+        return false
     end
 
     if callOk and status == 401 then
@@ -937,6 +1108,8 @@ local function testSavedConnection()
     end
 
     setStatus("Connection inactive", COLORS.Muted)
+    connectButton.Text = "Reconnect"
+    connectButton.Active = true
     return false
 end
 
@@ -1002,7 +1175,7 @@ local function authorizePlugin()
                         projectTitle.Visible = true
             refreshProjectsButton.Visible = true
             footer.Text = "Connected. Automatic reconnect is enabled."
-            testSavedConnection()
+            testSavedConnection(true)
             return true
         end
 
@@ -1033,7 +1206,7 @@ local function connectAutomatically()
             setStatus("Reconnecting...", COLORS.Muted)
 
             while true do
-                if testSavedConnection() then
+                if testSavedConnection(true) then
                     connecting = false
                     return
                 end

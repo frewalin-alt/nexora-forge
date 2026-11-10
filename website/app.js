@@ -31,6 +31,7 @@ function updateAccountUI(user) {
   if (logoutButton) logoutButton.hidden = false;
   if (generatorWorkspace) generatorWorkspace.hidden = false;
   startPluginAuthWatcher();
+  startPluginConnectionWatcher();
 
 }
 
@@ -182,6 +183,78 @@ const promptInput = document.getElementById("prompt");
 const output = document.getElementById("output");
 const notice = document.getElementById("notice");
 const generateButton = document.getElementById("generate");
+
+// Chat bleibt bis zur bestätigten Plugin-Verbindung gesperrt.
+if (promptInput) promptInput.disabled = true;
+if (generateButton) generateButton.disabled = true;
+
+let pluginConnectionActive = false;
+let pluginConnectionWatcherStarted = false;
+
+function setPluginConnectionUI(connection) {
+  const gate = document.getElementById("plugin-connection-gate");
+  const title = document.getElementById("plugin-connection-title");
+  const message = document.getElementById("plugin-connection-message");
+  const connected = connection?.connected === true;
+
+  pluginConnectionActive = connected;
+
+  if (gate) gate.hidden = connected;
+  if (promptInput) promptInput.disabled = !connected;
+  if (generateButton) generateButton.disabled = !connected;
+
+  const createButton = document.getElementById("create-project-from-prompt");
+  if (createButton) createButton.disabled = !connected;
+
+  if (connected) {
+    notice.textContent = "Nexora AI · Roblox Studio verbunden";
+    return;
+  }
+
+  if (title) title.textContent = "Roblox Studio nicht verbunden";
+
+  const messages = {
+    not_paired: "Öffne das Nexora-Forge-Plugin in Roblox Studio und klicke auf Connect.",
+    studio_offline: "Roblox Studio oder das Plugin ist offline. Öffne Studio und klicke im Plugin auf Reconnect.",
+    prompt_inactive: "Die Verbindung wurde nach 30 Minuten ohne Prompt pausiert. Klicke im Roblox-Studio-Plugin auf Reconnect.",
+  };
+
+  if (message) {
+    message.textContent =
+      messages[connection?.reason] ||
+      "Verbindung konnte nicht bestätigt werden. Öffne Roblox Studio und klicke im Plugin auf Reconnect.";
+  }
+
+  notice.textContent = "Chat gesperrt · Roblox Studio verbinden, um fortzufahren.";
+}
+
+function startPluginConnectionWatcher() {
+  if (pluginConnectionWatcherStarted) return;
+  pluginConnectionWatcherStarted = true;
+
+  async function refreshConnection() {
+    try {
+      const response = await fetch("/api/plugin/status", {
+        credentials: "same-origin",
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        setPluginConnectionUI({ connected: false, reason: "studio_offline" });
+        return;
+      }
+
+      const data = await response.json();
+      setPluginConnectionUI(data.connection);
+    } catch (error) {
+      console.warn("Plugin-Verbindungsstatus:", error);
+      setPluginConnectionUI({ connected: false, reason: "studio_offline" });
+    }
+  }
+
+  refreshConnection();
+  setInterval(refreshConnection, 10000);
+}
 
 let currentPage = "home";
 
@@ -1264,6 +1337,11 @@ document.getElementById("right-new-project")?.addEventListener("click", () => {
 let chatHistory = [];
 
 async function generate() {
+  if (!pluginConnectionActive) {
+    notice.textContent = "Bitte verbinde zuerst Roblox Studio über das Nexora-Forge-Plugin.";
+    return;
+  }
+
   const request = promptInput.value.trim();
 
   if (!request) {
@@ -1335,7 +1413,7 @@ async function generate() {
 
     notice.textContent = "AI connection error.";
   } finally {
-    generateButton.disabled = false;
+    generateButton.disabled = !pluginConnectionActive;
     generateButton.textContent = "Send message";
     promptInput.focus();
   }

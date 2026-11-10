@@ -491,20 +491,47 @@ function extract(result) {
 
   const pattern = /```(?:lua|luau)?[ \t]*\r?\n([\s\S]*?)```/gi;
   const blocks = [...result.matchAll(pattern)];
-  const codes = blocks.length
-    ? blocks.map(match => match[1].trim()).filter(Boolean)
-    : [result.trim()];
+  if (!blocks.length) return [];
 
-  return codes
-    .filter(code =>
-      /\b(print|local|function|return|game:GetService|script\.Parent)\b/.test(code)
-    )
-    .map((code, index) => ({
+  return blocks.map((match, index) => {
+    const previousEnd = index === 0 ? 0 :
+      blocks[index - 1].index + blocks[index - 1][0].length;
+    const header = result.slice(previousEnd, match.index);
+    const lines = header.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+
+    const typeMatch = header.match(/Typ\s*:\s*(Script|LocalScript|ModuleScript)/i);
+    const pathMatch = header.match(/Pfad\s*:\s*([^\r\n]+)/i);
+
+    const heading = lines.find(line =>
+      !/^Typ\s*:/i.test(line) &&
+      !/^Pfad\s*:/i.test(line) &&
+      !/^[-*]\s*$/.test(line)
+    );
+
+    const title = (heading || "NexoraScript" + (index + 1))
+      .replace(/^#{1,6}\s*/, "")
+      .replace(/^\*\*(.*?)\*\*$/, "$1")
+      .replace(/:$/, "")
+      .trim()
+      .slice(0, 80);
+
+    const type = typeMatch ? typeMatch[1] : "Script";
+    const fallback = type === "LocalScript"
+      ? "StarterPlayer/StarterPlayerScripts"
+      : type === "ModuleScript" ? "ReplicatedStorage" : "ServerScriptService";
+
+    const targetPath = pathMatch
+      ? pathMatch[1].trim().replace(/^`|`$/g, "").replace(/\s*>\s*/g, "/")
+      : fallback;
+
+    return {
       id: Date.now() + "-" + index,
-      title: "Script " + (index + 1),
-      path: "See response for details",
-      code
-    }));
+      title: title || "NexoraScript" + (index + 1),
+      type,
+      path: targetPath,
+      code: match[1].trim()
+    };
+  }).filter(item => item.code);
 }
 function message(label, text) {
   const box = document.createElement("article");
