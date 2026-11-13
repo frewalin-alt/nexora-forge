@@ -74,7 +74,7 @@ local main = create("Frame", {
 }, widget)
 
 local header = create("Frame", {
-    Size = UDim2.new(1, 0, 0, 76),
+    Size = UDim2.new(1, 0, 0, 64),
     BackgroundColor3 = COLORS.Panel,
     BorderSizePixel = 0,
 }, main)
@@ -85,7 +85,7 @@ create("TextLabel", {
     BackgroundTransparency = 1,
     Text = "NEXORA FORGE",
     TextColor3 = COLORS.Purple,
-    TextSize = 23,
+    TextSize = 19,
     Font = Enum.Font.GothamBold,
     TextXAlignment = Enum.TextXAlignment.Left,
 }, header)
@@ -102,9 +102,9 @@ create("TextLabel", {
 }, header)
 
 local connectionStatus = create("TextLabel", {
-    Position = UDim2.fromOffset(16, 91),
-    Size = UDim2.new(1, -32, 0, 34),
-    BackgroundColor3 = COLORS.Panel,
+    Position = UDim2.fromOffset(16, 82),
+    Size = UDim2.new(1, -150, 0, 36),
+    BackgroundTransparency = 1,
     Text = "● Not connected",
     TextColor3 = COLORS.Muted,
     TextSize = 12,
@@ -137,10 +137,10 @@ local websiteInput = create("TextBox", {
 }, main)
 
 local connectButton = create("TextButton", {
-    Position = UDim2.fromOffset(16, 211),
-    Size = UDim2.new(1, -32, 0, 38),
-    BackgroundColor3 = COLORS.Purple,
-    TextColor3 = COLORS.Text,
+    Position = UDim2.new(1, -126, 0, 82),
+    Size = UDim2.fromOffset(110, 36),
+    BackgroundColor3 = COLORS.Green,
+    TextColor3 = COLORS.Background,
     Text = "Connect",
     TextSize = 13,
     Font = Enum.Font.GothamBold,
@@ -1239,7 +1239,7 @@ refreshProjectsButton.MouseButton1Click:Connect(loadProjects)
 
 -- Automatisch verbinden, sobald das Plugin geladen wird.
 -- Nur beim ersten Mal ist eine Freigabe im Browser erforderlich.
-task.defer(connectAutomatically)
+-- Verbindung startet erst nach Klick auf Connect.
 
 openButton.Click:Connect(function()
     widget.Enabled = not widget.Enabled
