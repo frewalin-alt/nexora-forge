@@ -418,7 +418,9 @@ local function installProject()
 
     local serverScripts = game:GetService("ServerScriptService")
     local replicatedStorage = game:GetService("ReplicatedStorage")
-    local starterScripts = game:GetService("StarterPlayer"):WaitForChild("StarterPlayerScripts")
+    local starterPlayer = game:GetService("StarterPlayer")
+    local starterScripts = starterPlayer:WaitForChild("StarterPlayerScripts")
+    local starterGui = game:GetService("StarterGui")
 
     local installed = 0
     local skipped = 0
@@ -453,15 +455,21 @@ local function installProject()
             if first == "StarterPlayer" then
                 table.remove(parts, 1)
                 if parts[1] ~= "StarterPlayerScripts" then
-                    error("LocalScripts müssen in StarterPlayerScripts liegen: " .. cleanPath)
+                    error("LocalScripts unter StarterPlayer müssen in StarterPlayerScripts liegen: " .. cleanPath)
                 end
                 table.remove(parts, 1)
+                root = starterScripts
             elseif first == "StarterPlayerScripts" then
                 table.remove(parts, 1)
+                root = starterScripts
+            elseif first == "StarterGui" then
+                table.remove(parts, 1)
+                root = starterGui
             elseif first then
                 error("LocalScript-Ziel wird nicht unterstützt: " .. cleanPath)
+            else
+                root = starterScripts
             end
-            root = starterScripts
         elseif className == "ModuleScript" then
             if first and first ~= "ReplicatedStorage" then
                 error("ModuleScript-Ziel muss ReplicatedStorage sein: " .. cleanPath)
@@ -1103,8 +1111,8 @@ local function testSavedConnection(activate)
             startHeartbeat(token)
             startAutoSync(token)
             startJobPolling(token)
-            projectTitle.Visible = true
-            refreshProjectsButton.Visible = true
+            projectTitle.Visible = false
+            refreshProjectsButton.Visible = false
             return true
         end
 
@@ -1191,9 +1199,9 @@ local function authorizePlugin()
             setStatus("Connected", COLORS.Green)
             connectButton.Text = "Connected"
             connectButton.Active = false
-                        projectTitle.Visible = true
-            refreshProjectsButton.Visible = true
-            footer.Text = "Connected. Automatic reconnect is enabled."
+                        projectTitle.Visible = false
+            refreshProjectsButton.Visible = false
+            footer.Text = "Connected. Chat requests install automatically."
             testSavedConnection(true)
             return true
         end
