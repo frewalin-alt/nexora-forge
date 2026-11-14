@@ -291,6 +291,7 @@ local function normalizeProject(project)
         name = projectName,
         updatedAt = tostring(project.updatedAt or ""),
         scripts = {},
+        objects = {},
     }
 
     for _, item in ipairs(project.scripts) do
@@ -324,6 +325,29 @@ local function normalizeProject(project)
             path = scriptPath,
             source = scriptCode,
         })
+    end
+
+    if type(project.objects) == "table" then
+        local allowedObjects = {
+            RemoteEvent = true,
+            BindableEvent = true,
+            Folder = true,
+        }
+        for _, item in ipairs(project.objects) do
+            if type(item) == "table"
+                and allowedObjects[item.className]
+                and item.path == "ReplicatedStorage"
+                and type(item.name) == "string"
+                and string.match(item.name, "^[%a_][%w_]*$")
+                and #item.name <= 80
+                and #normalized.objects < 30 then
+                table.insert(normalized.objects, {
+                    className = item.className,
+                    path = "ReplicatedStorage",
+                    name = item.name,
+                })
+            end
+        end
     end
 
     return normalized
@@ -476,6 +500,27 @@ local function installProject()
     )
 
     local ok, err = pcall(function()
+        -- Gemeinsame Events/Ordner nur in ReplicatedStorage anlegen.
+        for _, item in ipairs(selectedProject.objects or {}) do
+            local existing = replicatedStorage:FindFirstChild(item.name)
+            if existing then
+                if existing:GetAttribute("NexoraManaged") == true
+                    and existing:GetAttribute("NexoraProjectId") == selectedProject.id
+                    and existing.ClassName == item.className then
+                    -- Bereits von diesem Nexora-Projekt verwaltet: behalten.
+                else
+                    skipped += 1
+                end
+            else
+                local instance = Instance.new(item.className)
+                instance.Name = item.name
+                instance:SetAttribute("NexoraManaged", true)
+                instance:SetAttribute("NexoraProjectId", selectedProject.id)
+                instance.Parent = replicatedStorage
+                installed += 1
+            end
+        end
+
         for index, item in ipairs(selectedProject.scripts) do
             local target = resolveTarget(item)
 
@@ -528,8 +573,8 @@ local function installProject()
     end
 
     setStatus("Project installed", COLORS.Green)
-    footer.Text = tostring(installed) .. " script(s) installed; "
-        .. tostring(skipped) .. " existing script(s) skipped."
+    footer.Text = tostring(installed) .. " item(s) installed; "
+        .. tostring(skipped) .. " existing item(s) skipped."
     return true
 end
 
@@ -594,8 +639,8 @@ local function startAutoSync(token)
                 and type(data.projects) == "table" then
 
                 if firstSync then
-                    -- Record existing projects without installing anything.
-                    -- Installation must always be started manually by the user.
+                    -- Bestehende Projekte beim ersten Start nur merken.
+                    -- Nur neue Chat-Updates werden automatisch installiert.
                     for _, project in ipairs(data.projects) do
                         if type(project) == "table" and project.id then
                             knownProjects[tostring(project.id)] =
@@ -604,7 +649,7 @@ local function startAutoSync(token)
                     end
 
                     firstSync = false
-                    footer.Text = "Automatic synchronization is active."
+                    footer.Text = "Automatic chat-to-Studio installation is active."
                 else
                     for _, project in ipairs(data.projects) do
                         if type(project) == "table" and project.id then
@@ -612,50 +657,24 @@ local function startAutoSync(token)
                             local updatedAt = tostring(project.updatedAt or "")
 
                             if knownProjects[id] ~= updatedAt then
-                                if type(project.scripts) == "table"
-                                    and #project.scripts > 0 then
+                                local hasScripts = type(project.scripts) == "table"
+                                    and #project.scripts > 0
+                                local hasObjects = type(project.objects) == "table"
+                                    and #project.objects > 0
 
-                                    if autoInstallEnabled
-                                        and autoInstallProjectId == id
-                                        and selectedProject
-                                        and selectedProject.id == id then
-
-                                        autoInstallAttempts[id] = autoInstallAttempts[id] or 0
-
-                                        if applyProject(project) then
-                                            local installedOk = installProject()
-
-                                            if installedOk then
-                                                knownProjects[id] = updatedAt
-                                                autoInstallAttempts[id] = 0
-                                                footer.Text = "Automatically installed updated project: "
-                                                    .. selectedProject.name
-                                            else
-                                                autoInstallAttempts[id] += 1
-                                                footer.Text = "Auto-install attempt "
-                                                    .. autoInstallAttempts[id] .. "/"
-                                                    .. MAX_AUTO_INSTALL_ATTEMPTS .. " failed."
-
-                                                if autoInstallAttempts[id] >= MAX_AUTO_INSTALL_ATTEMPTS then
-                                                    knownProjects[id] = updatedAt
-                                                    autoInstallEnabled = false
-                                                    autoInstallProjectId = nil
-                                                    autoInstallButton.Text = "Auto-Install: AUS"
-                                                    autoInstallButton.BackgroundColor3 = COLORS.Panel
-                                                    footer.Text = "Auto-install stopped after 3 failed attempts. Review the project and install manually."
-                                                end
-                                            end
-                                        else
+                                if hasScripts or hasObjects then
+                                    if applyProject(project) then
+                                        local installedOk = installProject()
+                                        if installedOk then
                                             knownProjects[id] = updatedAt
-                                            autoInstallEnabled = false
-                                            autoInstallProjectId = nil
-                                            autoInstallButton.Text = "Auto-Install: AUS"
-                                            autoInstallButton.BackgroundColor3 = COLORS.Panel
-                                            footer.Text = "Project validation failed. Auto-install stopped."
+                                            footer.Text = "Automatically installed Nexora chat update: "
+                                                .. selectedProject.name
+                                        else
+                                            footer.Text = "Automatic installation stopped. Existing non-Nexora objects were left unchanged."
                                         end
                                     else
                                         knownProjects[id] = updatedAt
-                                        footer.Text = "Website project updated. Refresh projects to review it."
+                                        footer.Text = "Nexora project validation failed; nothing was installed."
                                     end
                                 else
                                     knownProjects[id] = updatedAt
@@ -673,7 +692,7 @@ local function startAutoSync(token)
                 footer.Text = "Automatic sync: waiting for server..."
             end
 
-            task.wait(10)
+            task.wait(3)
         end
     end)
 end
