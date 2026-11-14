@@ -502,10 +502,25 @@ function validateProjectPayload(body) {
     });
   }
 
+  const allowedObjectClasses = new Set(["RemoteEvent", "BindableEvent", "Folder"]);
+  const safeObjects = (Array.isArray(body.objects) ? body.objects : [])
+    .slice(0, 30)
+    .filter(item => item && typeof item === "object"
+      && allowedObjectClasses.has(item.className)
+      && item.path === "ReplicatedStorage"
+      && typeof item.name === "string"
+      && /^[A-Za-z_][A-Za-z0-9_]{0,79}$/.test(item.name))
+    .map(item => ({
+      className: item.className,
+      path: "ReplicatedStorage",
+      name: item.name
+    }));
+
   return {
     id,
     title,
     scripts: safeScripts,
+    objects: safeObjects,
     history: Array.isArray(body.history) ? body.history.slice(-50) : [],
     graphNodes: Array.isArray(body.graphNodes) ? body.graphNodes.slice(0, 80).filter(node =>
       node && typeof node === "object" &&
@@ -1402,7 +1417,8 @@ app.post("/api/generate", async (req, res) => {
                 "Schreibe direkt danach eine eigene Zeile im Format: Pfad: ServerScriptService, StarterPlayerScripts oder ReplicatedStorage mit dem genauen Ziel.",
                 "Verwende für jeden Luau-Codeblock die Markdown-Markierung ```lua und schließe ihn mit ```.",
                 "Nenne für jedes Skript den genauen Roblox-Explorer-Pfad.",
-                "Gib benötigte RemoteEvents, BindableEvents und andere Objekte separat an.",
+                "Gib jedes zusätzlich benötigte Objekt separat und maschinenlesbar aus: Objekt: RemoteEvent | Pfad: ReplicatedStorage | Name: ExakterName. Erlaubte Klassen: RemoteEvent, BindableEvent, Folder. Nur tatsächlich benötigte Objekte nennen.",
+                "Erstelle RemoteEvents und BindableEvents in ReplicatedStorage und verwende exakt dieselben Namen in allen Scripts.",
                 "Vermische niemals mehrere Skripte in einem Codeblock.",
                 "Gib für jedes Script einen eigenen Markdown-Codeblock aus.",
                 "Verwende exakt die Reihenfolge: Überschrift mit Scriptnamen, Typ: ..., Pfad: ..., danach ein eigener ```lua-Codeblock.",
