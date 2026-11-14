@@ -830,11 +830,25 @@ function extractProjectScripts(result) {
   return scripts;
 }
 
+function extractProjectObjects(result) {
+  const objects = [];
+  const pattern = /^Objekt:\s*(RemoteEvent|BindableEvent|Folder)\s*\|\s*Pfad:\s*(ReplicatedStorage)\s*\|\s*Name:\s*([A-Za-z_][A-Za-z0-9_]*)\s*$/gim;
+  for (const match of result.matchAll(pattern)) {
+    if (objects.length >= 30) break;
+    objects.push({ className: match[1], path: match[2], name: match[3] });
+  }
+  return objects.filter((item, index, all) =>
+    all.findIndex(other => other.className === item.className
+      && other.path === item.path && other.name === item.name) === index
+  );
+}
+
 async function saveProjectResponse(request, result) {
   const scripts = extractProjectScripts(result);
-  if (!scripts.length) {
-    notice.textContent = "Keine Luau-Codeblöcke zum Speichern gefunden.";
-    return { id: null, synced: false, reason: "Keine Scripts erkannt." };
+  const objects = extractProjectObjects(result);
+  if (!scripts.length && !objects.length) {
+    notice.textContent = "Keine installierbaren Scripts oder Roblox-Objekte gefunden.";
+    return { id: null, synced: false, reason: "Keine installierbaren Elemente erkannt." };
   }
 
   const projects = getProjects();
@@ -854,8 +868,10 @@ async function saveProjectResponse(request, result) {
   }
 
   project.scripts = project.scripts || [];
+  project.objects = project.objects || [];
   project.history = project.history || [];
   project.scripts.push(...scripts);
+  project.objects.push(...objects);
   project.history.push({
     prompt: request,
     result,
@@ -870,7 +886,8 @@ async function saveProjectResponse(request, result) {
   return {
     id: project.id,
     synced,
-    scriptCount: scripts.length
+    scriptCount: scripts.length,
+    objectCount: objects.length
   };
 }
 
@@ -1394,13 +1411,13 @@ async function generate() {
 
     if (projectSave.synced) {
       notice.textContent =
-        `Nexora AI · ${projectSave.scriptCount} Script(s) an Roblox Studio übertragen.`;
+        `Nexora AI · ${projectSave.scriptCount} Script(s) und ${projectSave.objectCount} Objekt(e) werden automatisch in Roblox Studio erstellt.`;
     } else if (projectSave.id) {
       notice.textContent =
         "Scripts lokal gespeichert, aber Serversynchronisierung fehlgeschlagen. Bitte erneut anmelden und versuchen.";
     } else {
       notice.textContent =
-        "KI-Antwort erhalten, aber keine Luau-Scripts zum Übertragen erkannt.";
+        "KI-Antwort erhalten, aber keine installierbaren Elemente erkannt.";
     }
 
   } catch (error) {
