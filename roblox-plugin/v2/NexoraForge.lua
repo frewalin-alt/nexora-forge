@@ -558,7 +558,7 @@ end)
 
 
 -- NEXORA_BROWSER_AUTH_V1
-local SERVER_URL = "https://rap-computed-doing-consolidation.trycloudflare.com"
+local SERVER_URL = "https://stan-tue-wiring-specification.trycloudflare.com"
 local TOKEN_SETTING = "NexoraForge_DeviceToken"
 
 
